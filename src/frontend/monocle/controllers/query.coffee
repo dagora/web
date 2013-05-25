@@ -11,7 +11,7 @@ class QueryCtrl extends Monocle.Controller
 
   constructor: ->
     super
-    TukTuk.Modal.show "welcome"
+    # TukTuk.Modal.show "welcome"
     # TukTuk.Modal.loading()
     @boxes.removeClass "hidden"
 

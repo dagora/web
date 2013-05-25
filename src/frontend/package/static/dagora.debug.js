@@ -148,7 +148,6 @@
 
     function QueryCtrl() {
       QueryCtrl.__super__.constructor.apply(this, arguments);
-      TukTuk.Modal.show("welcome");
       this.boxes.removeClass("hidden");
     }
 
