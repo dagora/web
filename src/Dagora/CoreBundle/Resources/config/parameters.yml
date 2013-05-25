@@ -1,0 +1,14 @@
+parameters:
+
+    memcached.servers:
+      - { host: 127.0.0.1, port: 11211 }
+
+    searchify.save_changes: 1
+
+    searchify:
+        private_url  : 'http://:QlEXfmwDMCN1p1@8i6mv.api.searchify.com'
+        public_url   : 'http://8i6mv.api.searchify.com'
+        main_index   : 'sources'
+        save_changes : %searchify.save_changes%
+        scoring_functions:
+            search : 0

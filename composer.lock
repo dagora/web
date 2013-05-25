@@ -3,8 +3,62 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4f63071f76adb845750b34243f100e55",
+    "hash": "b384f102c813a958a4d10d159e16e8a3",
     "packages": [
+        {
+            "name": "dflydev/markdown",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-markdown.git",
+                "reference": "v1.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/dflydev/dflydev-markdown/zipball/v1.0.2",
+                "reference": "v1.0.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "dflydev\\markdown": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "New BSD License"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                },
+                {
+                    "name": "Michel Fortin",
+                    "homepage": "http://michelf.com"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "http://daringfireball.net"
+                }
+            ],
+            "description": "PHP Markdown & Extra",
+            "homepage": "http://github.com/dflydev/dflydev-markdown",
+            "keywords": [
+                "markdown"
+            ],
+            "time": "2012-01-15 19:36:37"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.1.1",
@@ -1198,6 +1252,69 @@
             "time": "2013-04-23 10:09:48"
         },
         {
+            "name": "nelmio/te-api-doc-bundle",
+            "version": "dev-master",
+            "target-dir": "Nelmio/ApiDocBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/touristeye/APIDocBundle.git",
+                "reference": "ba67ce0280970d1944f7f0255e29b2f527403af4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/touristeye/APIDocBundle/zipball/ba67ce0280970d1944f7f0255e29b2f527403af4",
+                "reference": "ba67ce0280970d1944f7f0255e29b2f527403af4",
+                "shasum": ""
+            },
+            "require": {
+                "dflydev/markdown": "1.0.*",
+                "symfony/form": ">=2.1,<2.3-dev",
+                "symfony/framework-bundle": ">=2.1,<2.3-dev",
+                "symfony/twig-bundle": ">=2.1,<2.3-dev"
+            },
+            "require-dev": {
+                "friendsofsymfony/rest-bundle": "dev-master",
+                "jms/serializer-bundle": "0.9.*",
+                "symfony/browser-kit": ">=2.1,<2.3-dev",
+                "symfony/css-selector": ">=2.1,<2.3-dev",
+                "symfony/validator": ">=2.1,<2.3-dev",
+                "symfony/yaml": ">=2.1,<2.3-dev"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Nelmio\\ApiDocBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nelmio",
+                    "homepage": "http://nelm.io"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/nelmio/NelmioApiDocBundle/contributors"
+                },
+                {
+                    "name": "Javier F. Escribano",
+                    "email": "javier@touristeye.com",
+                    "homepage": "https://github.com/fesja"
+                }
+            ],
+            "description": "Generates documentation for your REST API from annotations",
+            "keywords": [
+                "api",
+                "doc",
+                "documentation",
+                "rest"
+            ],
+            "time": "2013-01-10 11:20:37"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.2.0",
             "source": {
@@ -1283,6 +1400,53 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "searchify/php-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/touristeye/searchify-php-sdk.git",
+                "reference": "e9df0e5b915b1bd363638f44048e1a7b1ba086f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/touristeye/searchify-php-sdk/zipball/e9df0e5b915b1bd363638f44048e1a7b1ba086f9",
+                "reference": "e9df0e5b915b1bd363638f44048e1a7b1ba086f9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Searchify": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Javier F. Escribano",
+                    "email": "javier@touristeye.com",
+                    "homepage": "https://github.com/fesja"
+                },
+                {
+                    "name": "Indextank",
+                    "homepage": "https://github.com/flaptor"
+                }
+            ],
+            "description": "Searchify PHP SDK",
+            "homepage": "https://github.com/touristeye/searchify-php-sdk",
+            "keywords": [
+                "indextank",
+                "search",
+                "searchify"
+            ],
+            "time": "2013-04-10 17:00:35"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -1813,6 +1977,50 @@
             "time": "2013-05-24 09:07:59"
         },
         {
+            "name": "touristeye/searchify-bundle",
+            "version": "dev-master",
+            "target-dir": "TE/SearchifyBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/touristeye/SearchifyBundle.git",
+                "reference": "364386eadb4dedb303091ebcdb486bd422f46871"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/touristeye/SearchifyBundle/zipball/364386eadb4dedb303091ebcdb486bd422f46871",
+                "reference": "364386eadb4dedb303091ebcdb486bd422f46871",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "searchify/php-sdk": "dev-master@dev"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "TE\\SearchifyBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Javier F. Escribano",
+                    "email": "javier@touristeye.com",
+                    "homepage": "https://github.com/fesja"
+                }
+            ],
+            "description": "Bundle for Searchify.",
+            "homepage": "https://github.com/touristeye/SearchifyBundle",
+            "keywords": [
+                "search",
+                "searchify"
+            ],
+            "time": "2013-05-14 16:37:21"
+        },
+        {
             "name": "twig/extensions",
             "version": "v1.0.0",
             "source": {
@@ -1919,7 +2127,10 @@
     "stability-flags": {
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20,
-        "touristeye/doctrine-behaviors-bundle": 20
+        "touristeye/doctrine-behaviors-bundle": 20,
+        "searchify/php-sdk": 20,
+        "touristeye/searchify-bundle": 20,
+        "nelmio/te-api-doc-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

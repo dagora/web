@@ -2,12 +2,18 @@
 
 namespace Dagora\ApiBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
+use Nelmio\ApiDocBundle\Annotation\ApiDoc,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * API calls related to sources
+ *
+ * @Route("/sources")
+ */
 class SourceController extends Controller
 {
     /**

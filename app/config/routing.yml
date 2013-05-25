@@ -3,3 +3,9 @@ dagora_web:
     resource: "@DagoraWebBundle/Controller/"
     type:     annotation
     prefix:   /
+
+# Main routes
+dagora_api:
+    resource: "@DagoraApiBundle/Controller/"
+    type:     annotation
+    prefix:   /v1

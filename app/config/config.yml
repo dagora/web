@@ -1,6 +1,9 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: @TESearchifyBundle/Resources/config/config.yml }
+    - { resource: @DagoraApiBundle/Resources/config/config.yml }
+    - { resource: @DagoraCoreBundle/Resources/config/config.yml }
 
 framework:
     #esi:             ~

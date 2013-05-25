@@ -22,9 +22,15 @@ class AppKernel extends Kernel
             // Bundle of Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new TE\SearchifyBundle\TESearchifyBundle(),
 
             // own bundles
+            new Dagora\CoreBundle\DagoraCoreBundle(),
             new Dagora\WebBundle\DagoraWebBundle(),
+            new Dagora\ApiBundle\DagoraApiBundle(),
+
+            // api doc
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

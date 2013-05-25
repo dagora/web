@@ -1,1 +1,22 @@
 services:
+    memcached:
+        class: Memcached
+        calls:
+            - [ addServers, [ %memcached.servers% ]]
+
+    # main library
+    dlayer:
+        class:        Dagora\CoreBundle\Services\DagoraLayerService
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @memcached
+            - @searchify
+            - @validator
+            - @doctrine.entity_serializer
+            - @kernel
+            - @event_dispatcher
+        scope:        request
+
+    doctrine.entity_serializer:
+        class:        Dagora\CoreBundle\Services\EntitySerializer
+        arguments:    [@doctrine.orm.entity_manager]

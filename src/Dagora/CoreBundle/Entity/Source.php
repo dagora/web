@@ -129,4 +129,32 @@ class Source
         return $this->unit;
     }
 
+    /**
+     * Return array for API
+     *
+     * @param array $extraData
+     * @return array
+     */
+    public function asApiArray($extraData=array()) {
+
+        // Basic fields
+        $array = array(
+            'id'    => (int) $this->id,
+            'title' => $this->title,
+            'link'  => $this->link,
+            'unit'  => $this->unit
+        );
+
+        if ( isset($extraData['data']) ) {
+
+            $array['data'] = array();
+
+            foreach ($extraData['data'] as $data) {
+                $array['data'][] = $data->asApiArray();
+            }
+        }
+
+        return $array;
+    }
+
 }

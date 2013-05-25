@@ -278,7 +278,7 @@ class DagoraLayerService
         $this->em->flush();
 
         // add object to searchify
-        if ( ($entity == 'Source' ) {
+        if ( 'Source' == $entity ) {
             $event = new \TE\SearchifyBundle\Event\ObjectEvent($object);
             $this->eventDispatcher->dispatch(\TE\SearchifyBundle\Event\SearchifyEvents::OBJECT_UPDATE, $event);
         }

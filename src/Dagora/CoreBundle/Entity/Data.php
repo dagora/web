@@ -65,32 +65,32 @@ class Data
     }
 
     /**
-     * Set source
+     * Set date
      *
-     * @param source $source
-     * @return sourcePlace
+     * @param date $date
+     * @return Data
      */
-    public function setSource($source)
+    public function setDate($date)
     {
-        $this->source = $source;
+        $this->date = $date;
         return $this;
     }
 
     /**
-     * Get source
+     * Get date
      *
-     * @return source
+     * @return date
      */
-    public function getSource()
+    public function getDate()
     {
-        return $this->source;
+        return $this->date;
     }
 
     /**
      * Set value
      *
-     * @param  string $value
-     * @return Area
+     * @param  double $value
+     * @return Data
      */
     public function setValue($value)
     {
@@ -101,11 +101,28 @@ class Data
     /**
      * Get value
      *
-     * @return string
+     * @return double
      */
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Return array for API
+     *
+     * @param array $extraData
+     * @return array
+     */
+    public function asApiArray($extraData=array()) {
+
+        // Basic fields
+        $array = array(
+            'value' => (double) $this->value,
+            'date'  => $this->getDate()
+        );
+
+        return $array;
     }
 
 }

@@ -22,7 +22,13 @@
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
 
-        "touristeye/doctrine-behaviors-bundle": "dev-master"
+        "touristeye/doctrine-behaviors-bundle": "dev-master",
+
+        "searchify/php-sdk": "dev-master@dev",
+        "touristeye/searchify-bundle": "dev-master@dev",
+
+        "nelmio/te-api-doc-bundle": "dev-master"
+
     },
     "scripts": {
         "post-install-cmd": [

@@ -1,9 +1,9 @@
 <?php
 
-namespace Dagora\WebBundle;
+namespace Dagora\ApiBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class DagoraWebBundle extends Bundle
+class DagoraApiBundle extends Bundle
 {
 }
