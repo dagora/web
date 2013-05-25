@@ -15,7 +15,7 @@ services:
             - @doctrine.entity_serializer
             - @kernel
             - @event_dispatcher
-        scope:        request
+        #scope:        request
 
     doctrine.entity_serializer:
         class:        Dagora\CoreBundle\Services\EntitySerializer

@@ -26,6 +26,11 @@ class Source
     protected static $allowedParams = array('title', 'link', 'unit');
 
     /**
+     * Fields to get from searchify
+     */
+    public static $fieldsToIndex = array('o.id as id', 'title', 'updated_at');
+
+    /**
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")

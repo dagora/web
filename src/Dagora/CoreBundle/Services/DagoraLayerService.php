@@ -161,6 +161,9 @@ class DagoraLayerService
             $search->setMaxResults($num);
         }
 
+        // order by relevance
+        $search->setScoringFunction('relevance');
+
         return $search->getResults();
     }
 

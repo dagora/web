@@ -55,9 +55,9 @@ class Data
     private $dateType;
 
     /**
-     * @var int $value
+     * @var float $value
      *
-     * @ORM\Column(name="value", type="string")
+     * @ORM\Column(name="value", type="float")
      */
     private $value;
 

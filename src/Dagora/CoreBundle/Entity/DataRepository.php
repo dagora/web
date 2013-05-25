@@ -74,7 +74,7 @@ class DataRepository extends EntityRepository
         $values     = $commonData['values'];
 
         // set order
-        $order = '';
+        $order = 'ORDER BY d.date asc';
 
         if ( isset($params['order']) ) {
 
