@@ -216,11 +216,11 @@ class DagoraLayerService
             throw $this->createBadRequestException("Error with object");
         }
 
-        // set object creator if given
-        if ( isset($params['created_by']) ) {
-            $object->setCreatedBy($params['created_by']);
-            $object->setUpdatedBy($params['created_by']);
-        }
+        // // set object creator if given
+        // if ( isset($params['created_by']) ) {
+        //     $object->setCreatedBy($params['created_by']);
+        //     $object->setUpdatedBy($params['created_by']);
+        // }
 
         // create object
         $this->em->persist($object);

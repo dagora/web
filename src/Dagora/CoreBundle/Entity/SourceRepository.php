@@ -93,7 +93,7 @@ class SourceRepository extends EntityRepository
         $extraSql = count($conditions) ? 'WHERE ' .  join(' AND ', $conditions) : '';
 
         $q = $this->_em
-            ->createQuery('SELECT p, ptr '.$extraSelect.'
+            ->createQuery('SELECT s '.$extraSelect.'
                 FROM Dagora\CoreBundle\Entity\Source s '
                 . $extraSql . ' '
                 . $order)

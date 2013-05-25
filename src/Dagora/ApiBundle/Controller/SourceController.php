@@ -17,6 +17,59 @@ use Dagora\CoreBundle\Controller\Base\Controller,
 class SourceController extends Controller
 {
     /**
+     * Get a list of sources
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get a list of sources",
+     *  filters={
+     *      {"name"="lat", "dataType"="float"},
+     *      {"name"="lng", "dataType"="float"},
+     *      {"name"="num", "dataType"="int", "default"=20},
+     *      {"name"="s", "dataType"="string"},
+     *      {"name"="start", "dataType"="int", "default"=0}
+     *  },
+     *  output="It returns a list of Sources",
+     *  statusCodes={
+     *      200="Returned when successful"
+     *  }
+     * )
+     *
+     * @Route(".json", name="sources_list")
+     * @Method({"GET"})
+     */
+    public function listAction()
+    {
+        // get parameters
+        $params = $this->getQueryParameters();
+
+        $start = isset($params['start']) ? intval($params['start']) : 0;
+
+        // count number of results
+        $totalResults = $this->get('dlayer')->count('Source', $params);
+
+        $results = $resultIds = array();
+        if ( $totalResults > 0 && $params['start'] < $totalResults ) {
+
+            // get sources
+            $sources = $this->get('dlayer')->findAll('Source', $params);
+
+            // build response
+            $results  = $this->buildResults($sources);
+        }
+
+        $response = array(
+            'start'        => $start,
+            'resultCount'  => count($results),
+            'totalResults' => intval($totalResults),
+            'resultsList'  => $results
+        );
+
+        // return the response, but do not cache as it has user data
+        return $this->returnJSON($response, 'sources', null);
+    }
+
+    /**
      * Create a new source with data
      *
      * @ApiDoc(

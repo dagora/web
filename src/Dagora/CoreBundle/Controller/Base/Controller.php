@@ -235,4 +235,25 @@ class Controller extends BaseController
         return $params;
     }
 
+    /**
+     * Get the JSON from the objects and add the extra data
+     *
+     * @param array $objects
+     * @param array $extraData
+     *
+     * @return array
+     */
+    public function buildResults($objects, $extraData=array()) {
+
+        $results = array();
+
+        // add related data to object
+        foreach ($objects as $o) {
+
+            $results[] = $o->asApiArray();
+        }
+
+        return $results;
+    }
+
 }
