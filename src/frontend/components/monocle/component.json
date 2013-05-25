@@ -1,0 +1,8 @@
+{
+  "name": "monocle",
+  "version": "0.0.0",
+  "repository": {
+    "type": "local",
+    "path": "monocle"
+  }
+}
