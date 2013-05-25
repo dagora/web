@@ -3,7 +3,8 @@
 namespace Dagora\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
-    TE\DoctrineBehaviorsBundle as Behaviors;
+    TE\DoctrineBehaviorsBundle as Behaviors,
+    TE\SearchifyBundle\Model\Searchable;
 
 /**
  * Dagora\CoreBundle\Entity\Source
@@ -14,7 +15,8 @@ use Doctrine\ORM\Mapping as ORM,
 class Source
 {
     use Behaviors\Model\JSONBindable,
-        Behaviors\Model\Timestampable;
+        Behaviors\Model\Timestampable,
+        Searchable;
 
     /**
      * Allowed parameters to bind
@@ -155,6 +157,46 @@ class Source
         }
 
         return $array;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getArrayToIndex() {
+
+        $document = array(
+            "docid"  => 's'.$this->id,
+            "fields" => array(
+                "timestamp" => $this->getUpdatedAt() ? $this->getUpdatedAt()->getTimestamp() : 0,
+                'text'      => $this->title
+            ),
+            "variables" => array(),
+            "categories" => array(
+                'model'       => 'Source'
+            )
+        );
+
+        return $document;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getArrayToIndexFromArray($array) {
+
+        $document = array(
+            "docid"  => 's'.$array['id'],
+            "fields" => array(
+                "timestamp" => (int) strtotime($array['updated_at']),
+                'text'      => $array['title']
+            ),
+            "variables" => array(),
+            "categories" => array(
+                'model'       => 'Source'
+            )
+        );
+
+        return $document;
     }
 
 }
