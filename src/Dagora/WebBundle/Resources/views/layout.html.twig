@@ -2,10 +2,10 @@
 
 {% block head %}
     <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/acmedemo/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/dagoraweb/css/main.css') }}" />
 {% endblock %}
 
-{% block title 'Demo Bundle' %}
+{% block title 'Dagora' %}
 
 {% block body %}
     {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -17,7 +17,7 @@
     {% block content_header %}
         <ul id="menu">
             {% block content_header_more %}
-                <li><a href="{{ path('_demo') }}">Demo Home</a></li>
+                <li><a href="{{ path('home') }}">Inicio</a></li>
             {% endblock %}
         </ul>
 
@@ -27,11 +27,4 @@
     <div class="block">
         {% block content %}{% endblock %}
     </div>
-
-    {% if code is defined %}
-        <h2>Code behind this page</h2>
-        <div class="block">
-            <div class="symfony-content">{{ code|raw }}</div>
-        </div>
-    {% endif %}
 {% endblock %}

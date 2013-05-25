@@ -1,0 +1,5 @@
+# Main routes
+dagora_web:
+    resource: "@DagoraWebBundle/Controller/"
+    type:     annotation
+    prefix:   /
