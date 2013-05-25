@@ -14,9 +14,6 @@ class __View.GraphPie extends Monocle.View
   constructor: ->
     super
     @append @model
-
-    console.error @model
-
     options =
       colors: ["3498db", "#ddd"]
       legend: position: 'none'
