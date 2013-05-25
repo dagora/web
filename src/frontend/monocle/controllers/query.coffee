@@ -17,27 +17,25 @@ class QueryCtrl extends Monocle.Controller
 
     mock = [
       ['Year', 'Sales'],
-      ['Apr/2008',  1000],
-      ['xxx/XXXX',  1234],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['xxx/XXXX',  1170],
-      ['2006',  660],
-      ['2007',  1030],
+      ['Apr/20',  1000],
+      ['xxx/XX',  1234],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170],
+      ['xxx/XX',  1170]
     ]
     query = __Model.Query.create
-      title: "Test"
-      source: "Publico"
+      title: "TITULO DE CONSULTA"
+      source: "Publico.es"
       unit: "people"
       data: mock
 

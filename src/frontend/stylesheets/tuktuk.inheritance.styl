@@ -1,2 +1,29 @@
+@import "__init.styl"
+
 [data-graph=line]
   height: 256px
+
+
+[data-tuktuk=totals] > li
+  width: 33%
+  COLOR = lighten(THEME, 65%)
+
+  &:nth-child(2)
+    border-left: solid 1px COLOR
+    border-right: solid 1px COLOR
+
+  & .icon
+    font-size: 4.0em
+
+  & strong
+    display: inline-block
+    font-size: 5.0em
+    margin-left: 0.2em
+
+  & small
+    display: block
+    margin-top: 1em
+    font-weight: bold
+
+  & .icon, small
+    color: COLOR
