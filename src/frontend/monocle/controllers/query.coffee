@@ -7,14 +7,7 @@ class QueryCtrl extends Monocle.Controller
     # TukTuk.Modal.loading()
 
 
-    # mock = [
-    #   ['Year', 'Sales', 'Expenses'],
-    #   ['Apr/2008',  1000,      400],
-    #   ['2005',  1170,      460],
-    #   ['2006',  660,       1120],
-    #   ['2007',  1030,      540],
-    # ]
-
+    # BAR
     mock = [
       ['Year', 'Sales'],
       ['Apr/20',  1000],
@@ -39,7 +32,15 @@ class QueryCtrl extends Monocle.Controller
       unit: "people"
       data: mock
 
-    new __View.GraphLine model: query
+    new __View.GraphBar model: query
+
+
+    # PIE
+    new __View.GraphPie model: title: "Percent.1", percent: 25
+    new __View.GraphPie model: title: "Percent.2", percent: 75
+    new __View.GraphPie model: title: "Percent.3", percent: 34
+    new __View.GraphPie model: title: "Percent.4", percent: 17
+
 
 
 $ ->

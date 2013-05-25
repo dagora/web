@@ -1,10 +1,12 @@
 @import "__init.styl"
 
-[data-graph=line]
-  height: 256px
+[data-graph=bar]
+  height: 320px
 
+[data-graph=pie]
+  width: 25%
 
-[data-tuktuk=totals] > li
+[data-tuktuk=totals]#overview > li
   width: 33%
   COLOR = lighten(THEME, 65%)
 
@@ -13,11 +15,11 @@
     border-right: solid 1px COLOR
 
   & .icon
-    font-size: 4.0em
+    font-size: 3em
 
   & strong
     display: inline-block
-    font-size: 5.0em
+    font-size: 4.5em
     margin-left: 0.2em
 
   & small
@@ -27,3 +29,6 @@
 
   & .icon, small
     color: COLOR
+
+[data-tuktuk=totals]#circles > li
+  width: 25%
