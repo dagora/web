@@ -39,11 +39,14 @@ section header
   transform scale(0)
   transition all 300ms
 
+  &.hidden
+    display: none !important
+
   &.active
     opacity: 1
     transform scale(1)
 
   &:nth-child(2)
-    transition-delay: 300ms
+    transition-delay: 200ms
   &:nth-child(3)
-    transition-delay: 600ms
+    transition-delay: 400ms

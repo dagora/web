@@ -99,7 +99,6 @@
       var data, options;
       GraphPie.__super__.constructor.apply(this, arguments);
       this.append(this.model);
-      console.error(this.model);
       options = {
         colors: ["3498db", "#ddd"],
         legend: {
@@ -143,25 +142,24 @@
     };
 
     QueryCtrl.prototype.events = {
-      "click button": "onSearch",
+      "click button": "search",
       "keypress input": "onKeyPress"
     };
 
     function QueryCtrl() {
       QueryCtrl.__super__.constructor.apply(this, arguments);
-      this.boxes.removeClass("active");
+      this.boxes.removeClass("hidden");
     }
-
-    QueryCtrl.prototype.onSearch = function(event) {
-      return this.render();
-    };
 
     QueryCtrl.prototype.onKeyPress = function(event) {
       this.boxes.removeClass("active");
-      return this.pies.html("");
+      this.pies.html("");
+      if (event.keyCode === 13) {
+        return this.search();
+      }
     };
 
-    QueryCtrl.prototype.render = function() {
+    QueryCtrl.prototype.search = function() {
       var mock, query;
       this.boxes.addClass("active");
       mock = [['Year', 'Sales'], ['Apr/20', 1000], ['xxx/XX', 1234], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170]];
