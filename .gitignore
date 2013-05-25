@@ -1,3 +1,12 @@
+# GENERAL
+.DS_Store
+Desktop.ini
+._*
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# BACKEND
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
@@ -7,4 +16,5 @@
 /bin/
 /composer.phar
 
+# FRONTEND
 /src/frontend/node_modules
