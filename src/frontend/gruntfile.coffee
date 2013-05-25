@@ -20,7 +20,8 @@ module.exports = (grunt) ->
         'monocle/controllers/*.coffee']
 
       stylesheets: [
-        'stylesheets/*.styl']
+        'stylesheets/tuktuk.theme.dagora.styl',
+        'stylesheets/tuktuk.inheritance.styl']
 
       css_core: [
         'components/tuktuk/tuktuk.css',
