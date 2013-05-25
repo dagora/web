@@ -6,3 +6,5 @@
 /vendor/
 /bin/
 /composer.phar
+
+/src/frontend/node_modules
