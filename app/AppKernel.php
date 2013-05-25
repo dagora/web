@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Dagora\CoreBundle\DagoraCoreBundle(),
             new Dagora\WebBundle\DagoraWebBundle(),
             new Dagora\ApiBundle\DagoraApiBundle(),
+            new Dagora\ScrapperBundle\DagoraScrapperBundle(),
 
             // api doc
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
