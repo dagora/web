@@ -1,6 +1,6 @@
 <?php
 
-namespace TE\CoreBundle\Utilities\Exception;
+namespace Dagora\CoreBundle\Utilities\Exception;
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
