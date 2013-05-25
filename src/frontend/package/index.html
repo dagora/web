@@ -9,18 +9,21 @@
     <link rel="stylesheet" href="static/dagora.css">
 </head>
 <body data-tuktuk="boxes">
-
-    <section id="results">
+    <section>
         <header class="bck light">
             <h3 class="on-left text bold">DAGORA <span class="tag bck theme">BETA!</span></h3>
-            <nav class="on-right">
-                <button class="secondary">Compartir</button>
-            </nav>
+
+            <div class="on-right">
+                <div class="form display inline">
+                    <input type="text" class="anchor" placeholder="Buscar..." />
+                </div>
+                <button class="small inline icon search "></button>
+            </div>
         </header>
         <article class="padding scroll">
-            <div class="padding bck theme">
+            <div class="padding bck theme box">
                 <h4 class="text bold">OVERVIEW</h4>
-                <ul class="margin" data-tuktuk="totals">
+                <ul class="margin" data-tuktuk="totals" id="overview">
                     <li>
                         <span class="icon book"></span>
                         <strong>3609</strong>
@@ -37,30 +40,33 @@
                     </li>
                 </ul>
             </div>
-            <div id="line" class="padding bck dark margin-bottom"></div>
+            <!-- BAR GRAPH -->
+            <div id="bar" class="padding bck dark margin-bottom box"></div>
 
-            <div class="padding margin-top">
-                <h4 class="text bold color theme">TOP ACTIONS</h4>
+            <div class="padding margin-top box">
+                <!-- <h4 class="text bold color theme">PIE</h4> -->
+                <!-- PIE GRAPH -->
+                <ul class="margin" data-tuktuk="totals" id="pie"></ul>
+
+                <ul data-tuktuk="totals">
+                    <li>
+                        <strong class="text color theme on-left">14</strong>
+                        <small>&nbsp;surveys</small></li>
+                    <li>
+                        <strong class="text color theme on-left">3,420</strong>
+                        <small>&nbsp;photos</small>
+                    </li>
+                    <li>
+                        <strong class="text color theme on-left">99</strong>
+                        <small>&nbsp;ratings</small>
+                    </li>
+                </ul>
+                <hr>
+                <div class="text align center">
+                    Avg numbeer of actions per user: <strong class="text bold color theme">52.02</strong>
+                </div>
             </div>
-
         </article>
-
-        <!--
-        <footer class="bck light">
-            <nav class="on-left text bold" data-tuktuk="menu">
-                <a href="#" class="active">Shots<small>(100)</small></a>
-                <a href="#">Projects<small>(3)</small></a>
-                <a href="#">Likes<small>(192)</small></a>
-                <a href="#">Tags<small>(160)</small></a>
-            </nav>
-
-            <nav class="on-right">
-                <button class="tiny secondary">tiny</button>
-                <button class="small secondary">small</button>
-                <button class="secondary">normal</button>
-            </nav>
-        </footer>
-        -->
     </section>
 
     <div id="modal" data-tuktuk="modal" class="column_5">
