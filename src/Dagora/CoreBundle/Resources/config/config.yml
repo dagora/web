@@ -1,3 +1,10 @@
 imports:
     - { resource: services.yml }
     - { resource: parameters.yml }
+
+doctrine:
+  orm:
+    dql:
+      numeric_functions:
+        GEO_DISTANCE: Dagora\CoreBundle\Doctrine\Query\Mysql\GeoDistance
+        FIELD: Dagora\CoreBundle\Doctrine\Query\Mysql\Field
