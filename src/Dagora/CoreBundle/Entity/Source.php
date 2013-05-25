@@ -141,10 +141,12 @@ class Source
 
         // Basic fields
         $array = array(
-            'id'    => (int) $this->id,
-            'title' => $this->title,
-            'link'  => $this->link,
-            'unit'  => $this->unit
+            'id'      => (int) $this->id,
+            'title'   => $this->title,
+            'link'    => $this->link,
+            'unit'    => $this->unit,
+            'created' => $this->getCreatedAt() ? $this->getCreatedAt()->format('Y-m-d H:i:s') : 0,
+            'updated' => $this->getUpdatedAt() ? $this->getUpdatedAt()->format('Y-m-d H:i:s') : 0
         );
 
         if ( isset($extraData['data']) ) {
