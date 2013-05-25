@@ -30,6 +30,7 @@ module.exports = (grunt) ->
       js_core: [
         'components/jquery/jquery.min.js',
         'components/monocle/monocle.js',
+        'components/hope/hope.js',
         'components/tuktuk/tuktuk.js']
 
     coffee:
