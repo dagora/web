@@ -165,7 +165,7 @@ Copyright (c) 2011-2013 Tapquo S.L. - Licensed GPLv3, Commercial
     */
 
     loading = function(text) {
-      lock.attr("data-loading", "true").addClass("active");
+      lock.attr("data-loading", "true").addClass("active").show();
       return this;
     };
     return {
