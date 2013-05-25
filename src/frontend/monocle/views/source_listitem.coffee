@@ -1,6 +1,6 @@
 class __View.SourceListItem extends Monocle.View
 
-  container: "[data-context=sources] > table"
+  container: "[data-context=search] > table"
 
   template: """
       <tr>
@@ -24,3 +24,4 @@ class __View.SourceListItem extends Monocle.View
 
   onClick: (event) ->
     console.error @model
+    @url "/" + @model.id

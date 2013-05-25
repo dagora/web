@@ -1,10 +1,8 @@
 class SourcesCtrl extends Monocle.Controller
 
-  URL = "http://api.dagora.es/"
-
   elements:
     "input"                         : "txtSearch"
-    "[data-context=sources] > table": "results"
+    "[data-context=search] > table" : "results"
 
   events:
     "click button"                  : "search"
@@ -19,11 +17,12 @@ class SourcesCtrl extends Monocle.Controller
 
   # EVENTS
   onSearch: (event) ->
-    do @fetch if event.keyCode is 13 and @txtSearch.val()?
+    @url @txtSearch.val() if event.keyCode is 13 and @txtSearch.val()?
 
-  fetch: ->
+  fetch: (value) ->
+    console.log "fetch", value
     @results.html ""
-    Dagora.api("GET", "sources.json", s : @txtSearch.val()).then (error, sources) =>
+    Dagora.api("GET", "sources.json", s : value).then (error, sources) =>
       if sources?
         __Model.Source.create source for source in sources
       else
@@ -36,5 +35,4 @@ class SourcesCtrl extends Monocle.Controller
     __Model.Source.create id: "3", title: "t3", link: "u3", created: new Date(), updated: new Date()
     __Model.Source.create id: "4", title: "t4", link: "u4", created: new Date(), updated: new Date()
 
-$ ->
-  __Controller.Sources = new SourcesCtrl "section"
+__Controller.Sources = new SourcesCtrl "section"
