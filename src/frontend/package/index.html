@@ -12,12 +12,16 @@
     <section>
         <header class="bck light">
             <h3 class="on-left text bold">DAGORA <span class="tag bck theme">BETA!</span></h3>
-            <nav class="on-right">
-                <button class="secondary small"><span class="icon search"></span>Buscar</button>
-            </nav>
+
+            <div class="on-right">
+                <div class="form display inline">
+                    <input type="text" class="anchor" placeholder="Buscar..." />
+                </div>
+                <button class="small inline icon search "></button>
+            </div>
         </header>
         <article class="padding scroll">
-            <div class="padding bck theme">
+            <div class="padding bck theme box">
                 <h4 class="text bold">OVERVIEW</h4>
                 <ul class="margin" data-tuktuk="totals" id="overview">
                     <li>
@@ -37,9 +41,9 @@
                 </ul>
             </div>
             <!-- BAR GRAPH -->
-            <div id="bar" class="padding bck dark margin-bottom"></div>
+            <div id="bar" class="padding bck dark margin-bottom box"></div>
 
-            <div class="padding margin-top">
+            <div class="padding margin-top box">
                 <!-- <h4 class="text bold color theme">PIE</h4> -->
                 <!-- PIE GRAPH -->
                 <ul class="margin" data-tuktuk="totals" id="pie"></ul>

@@ -136,10 +136,34 @@
 
     __extends(QueryCtrl, _super);
 
+    QueryCtrl.prototype.elements = {
+      "input": "txtSearch",
+      ".box": "boxes",
+      "#pie": "pies"
+    };
+
+    QueryCtrl.prototype.events = {
+      "click button": "onSearch",
+      "keypress input": "onKeyPress"
+    };
+
     function QueryCtrl() {
-      var mock, query;
       QueryCtrl.__super__.constructor.apply(this, arguments);
-      console.error("hello world :)");
+      this.boxes.removeClass("active");
+    }
+
+    QueryCtrl.prototype.onSearch = function(event) {
+      return this.render();
+    };
+
+    QueryCtrl.prototype.onKeyPress = function(event) {
+      this.boxes.removeClass("active");
+      return this.pies.html("");
+    };
+
+    QueryCtrl.prototype.render = function() {
+      var mock, query;
+      this.boxes.addClass("active");
       mock = [['Year', 'Sales'], ['Apr/20', 1000], ['xxx/XX', 1234], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170]];
       query = __Model.Query.create({
         title: "TITULO DE CONSULTA",
@@ -168,20 +192,20 @@
           percent: 34
         }
       });
-      new __View.GraphPie({
+      return new __View.GraphPie({
         model: {
           title: "Percent.4",
           percent: 17
         }
       });
-    }
+    };
 
     return QueryCtrl;
 
   })(Monocle.Controller);
 
   $(function() {
-    return __Controller.Query = new QueryCtrl("body");
+    return __Controller.Query = new QueryCtrl("section");
   });
 
 }).call(this);

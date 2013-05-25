@@ -1,11 +1,30 @@
 class QueryCtrl extends Monocle.Controller
 
+  elements:
+    "input"         : "txtSearch"
+    ".box"          : "boxes"
+    "#pie"          : "pies"
+
+  events:
+    "click button"    : "onSearch"
+    "keypress input"  : "onKeyPress"
+
   constructor: ->
     super
-    console.error "hello world :)"
     # TukTuk.Modal.show "modal"
     # TukTuk.Modal.loading()
+    @boxes.removeClass "active"
 
+
+  onSearch: (event) ->
+    @render()
+
+  onKeyPress: (event) ->
+    @boxes.removeClass "active"
+    @pies.html ""
+
+  render: ->
+    @boxes.addClass "active"
 
     # BAR
     mock = [
@@ -41,7 +60,5 @@ class QueryCtrl extends Monocle.Controller
     new __View.GraphPie model: title: "Percent.3", percent: 34
     new __View.GraphPie model: title: "Percent.4", percent: 17
 
-
-
 $ ->
-  __Controller.Query = new QueryCtrl "body"
+  __Controller.Query = new QueryCtrl "section"
