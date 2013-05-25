@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new TE\SearchifyBundle\TESearchifyBundle(),
+            new TE\DoctrineBehaviorsBundle\TEDoctrineBehaviorsBundle(),
 
             // own bundles
             new Dagora\CoreBundle\DagoraCoreBundle(),

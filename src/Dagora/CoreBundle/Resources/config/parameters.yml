@@ -12,3 +12,5 @@ parameters:
         save_changes : %searchify.save_changes%
         scoring_functions:
             search : 0
+
+    te.doctrine_behaviors.translatable_listener.accepted_locales: []

@@ -379,7 +379,7 @@ class DagoraLayerService
      */
     private function fillParamsOfData($params, $object)
     {
-        if ( !$object ) {
+        if ( !$object && !isset($params['source']) ) {
 
             // get source
             if ( !isset($params['source_id']) ) {

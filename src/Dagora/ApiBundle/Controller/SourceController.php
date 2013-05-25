@@ -2,11 +2,11 @@
 
 namespace Dagora\ApiBundle\Controller;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc,
+use Dagora\CoreBundle\Controller\Base\Controller,
+    Nelmio\ApiDocBundle\Annotation\ApiDoc,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -37,6 +37,14 @@ class SourceController extends Controller
 
         // create source
         $source = $this->get('dlayer')->create('Source', $params);
+
+        if ( isset($params['data']) ) {
+
+            foreach ($params['data'] as $data) {
+                $data['source'] = $source;
+                $this->get('dlayer')->create('Data', $data);
+            }
+        }
 
         return $this->returnShow($source, false);
     }
@@ -80,7 +88,7 @@ class SourceController extends Controller
     private function returnShow($source)
     {
         $data = $this->get('dlayer')->findAll('Data', array(
-                'source' => $source,
+            'source_id' => array($source->getId()),
         ));
 
         $response = $source->asApiArray(array(

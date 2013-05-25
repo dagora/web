@@ -118,7 +118,7 @@ class DataRepository extends EntityRepository
 
         // get with ids
         if ( isset($params['source_id']) ) {
-            $conditions[]  = "d.source_id IN (:ids)";
+            $conditions[]  = "d.source IN (:ids)";
             $values['ids'] = $params['source_id'];
         }
 
