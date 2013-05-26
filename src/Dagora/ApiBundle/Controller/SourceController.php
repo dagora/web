@@ -88,16 +88,98 @@ class SourceController extends Controller
         // get parameters
         $params = json_decode($this->getRequest()->getContent(), true);
 
+        return $this->returnJSON($params, 'sources', null);
+
         // create source
-        $source = $this->get('dlayer')->create('Source', $params);
+        //$source = $this->get('dlayer')->create('Source', $params);
 
-        if ( isset($params['data']) ) {
+        // $fiveMBs = 5 * 1024 * 1024;
+        // $fp = fopen("php://temp/maxmemory:$fiveMBs", 'r+');
+        // fputs($fp, $params['data']);
+        // rewind($fp);
 
-            foreach ($params['data'] as $data) {
-                $data['source'] = $source;
-                $this->get('dlayer')->create('Data', $data);
-            }
-        }
+        // $data = array();
+        // while (($row = fgetcsv($fp, 1000, ",")) !== FALSE) {
+        //     $data[] = $row;
+        // }
+        // fclose($fp);
+
+        // $line0        = $data[0];
+        // $columnsCount = count($line0);
+
+        // // we have several sources of information
+        // if ( $columnsCount > 2 ) {
+
+        //     $allData = array();
+
+        //     // get dates
+        //     $dates = array_slice($line0, 1);
+        //     $avoidFirst = true;
+        //     foreach ($data as $lineData) {
+
+        //         // do not insert first line
+        //         if ( $avoidFirst ) {
+        //             $avoidFirst = false;
+        //             continue;
+        //         }
+
+        //         // source title
+        //         $titleSuffix = $lineData[0];
+        //         $sourceTitle = $params['title'] . ' - ' . $titleSuffix;
+        //         $sourceHash  = md5($sourceTitle);
+
+        //         $sourcesToInsert[] = array(
+        //             'title' => $sourceTitle,
+        //             'link'  => $params['link'],
+        //             'unit'  => $params['unit']
+        //         );
+
+        //         // values
+        //         $values = array_slice($lineData, 1);
+
+        //         $allData[ $sourceHash ] = array_combine($dates, $values);
+        //     }
+
+        //     // insert different sources
+
+
+        //     // get sources
+
+
+        //     // insert all data
+
+        //     print_r($allData);
+        // }
+        // die();
+
+        // if ( isset($params['data']) ) {
+
+        //     // we have an array
+        //     if ( is_array($params['data']) ) {
+        //         $allData = $params['data'];
+        //     }
+        //     // we don't have an array, we have a CSV
+        //     else {
+        //         $csvLines = explode("\n", $params['data']);
+
+        //         $allData = array();
+        //         foreach ($csvLines as $line) {
+        //             $r = explode(',', $line);
+        //             $allData[] = array(
+        //                 'date'  => $r[0],
+        //                 'value' => $r[1]
+        //             );
+        //         }
+        //     }
+
+        //     print_r($allData);
+        //     die();
+
+        //     foreach ($allData as $data) {
+        //         $data['source'] = $source;
+        //         $this->get('dlayer')->create('Data', $data);
+        //     }
+        // }
 
         return $this->returnShow($source, false);
     }
