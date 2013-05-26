@@ -2,7 +2,7 @@
 
   window.Dagora = (function() {
     var SERVICE, api;
-    SERVICE = " http://api.dagora.es/v1/";
+    SERVICE = "http://api.dagora.es/v1/";
     api = function(type, method, parameters) {
       var promise,
         _this = this;
@@ -106,8 +106,7 @@
       data = google.visualization.arrayToDataTable(data);
       options = {
         animation: {
-          duration: 1000,
-          easing: "linear"
+          duration: 400
         },
         areaOpacity: 0.1,
         backgroundColor: "#ecf0f1",
@@ -119,19 +118,22 @@
         fontName: "Oswald",
         fontSize: 12,
         legend: {
-          position: 'none'
+          position: "none"
         },
         pointSize: 16,
         hAxis: {
-          baselineColor: "#f00",
           textStyle: {
-            color: "#aaa"
+            color: "#999"
           }
         },
         vAxis: {
+          minValue: 0,
           gridlines: {
-            color: "#ecf0f1",
-            count: 0
+            color: "#fff",
+            count: 5
+          },
+          textStyle: {
+            color: "#999"
           }
         },
         height: 232
@@ -237,13 +239,13 @@
 
     SourceOverview.prototype.container = "section > article #overview";
 
-    SourceOverview.prototype.template = "<h4 class=\"text bold uppercase\">{{title}}</h4>\n<ul class=\"margin\" data-tuktuk=\"totals\" id=\"overview\">\n    <li>\n        <span class=\"icon book\"></span>\n        <strong>{{data.length}}</strong>\n        <small>registros</small></li>\n    <li>\n        <strong>{{unit}}</strong>\n        <small>unidad</small>\n    </li>\n    <li>\n        <span class=\"icon dashboard\"></span>\n        <strong>{{progresion}}%</strong>\n        <small>progresion</small>\n    </li>\n</ul>";
+    SourceOverview.prototype.template = "<h4 class=\"text bold uppercase\">{{title}}</h4>\n<ul class=\"margin\" data-tuktuk=\"totals\"   id=\"overview\">\n    <li>\n        <span class=\"icon book\"></span>\n        <strong>{{data.length}}</strong>\n        <small>registros</small></li>\n    <li>\n        <strong>{{unit}}</strong>\n        <small>unidad</small>\n    </li>\n    <li>\n        <span class=\"icon dashboard\"></span>\n        <strong>{{progresion}}%</strong>\n        <small>crecimiento</small>\n    </li>\n</ul>";
 
     function SourceOverview() {
       var progresion;
       SourceOverview.__super__.constructor.apply(this, arguments);
-      progresion = (this.model.data[this.model.data.length - 1].value * 100) / this.model.data[0].value;
-      this.model.progresion = parseInt(progresion);
+      progresion = this.model.data[this.model.data.length - 1].value / this.model.data[0].value;
+      this.model.progresion = parseInt(progresion * 100);
       this.html(this.model);
     }
 
@@ -315,13 +317,14 @@
     };
 
     SearchCtrl.prototype.events = {
-      "click header button": "search",
-      "keypress input": "onSearch"
+      "click [data-action=search]": "search",
+      "keypress input#txt-search": "onSearch"
     };
 
     function SearchCtrl() {
       SearchCtrl.__super__.constructor.apply(this, arguments);
       __Model.Source.bind("create", this.bindSourceCreated);
+      this.page = this.el.attr("data-page");
     }
 
     SearchCtrl.prototype.bindSourceCreated = function(instance) {
@@ -360,8 +363,12 @@
 
     SearchCtrl.prototype.search = function() {
       if (this.txtSearch.val()) {
-        __Controller.Source.hide();
-        return this.url(this.txtSearch.val());
+        if (this.page === "landing") {
+          return window.location = "search.html#" + (this.txtSearch.val());
+        } else {
+          __Controller.Source.hide();
+          return this.url(this.txtSearch.val());
+        }
       }
     };
 

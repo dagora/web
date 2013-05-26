@@ -6,7 +6,7 @@ class __View.SourceOverview extends Monocle.View
 
   template: """
     <h4 class="text bold uppercase">{{title}}</h4>
-    <ul class="margin" data-tuktuk="totals" id="overview">
+    <ul class="margin" data-tuktuk="totals"   id="overview">
         <li>
             <span class="icon book"></span>
             <strong>{{data.length}}</strong>
@@ -18,13 +18,13 @@ class __View.SourceOverview extends Monocle.View
         <li>
             <span class="icon dashboard"></span>
             <strong>{{progresion}}%</strong>
-            <small>progresion</small>
+            <small>crecimiento</small>
         </li>
     </ul>
     """
 
   constructor: ->
     super
-    progresion = (@model.data[@model.data.length - 1].value * 100) / @model.data[0].value
-    @model.progresion = parseInt(progresion)
+    progresion = @model.data[@model.data.length - 1].value / @model.data[0].value
+    @model.progresion = parseInt(progresion * 100)
     @html @model

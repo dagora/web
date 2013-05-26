@@ -1,6 +1,6 @@
 window.Dagora = do ->
 
-  SERVICE   = " http://api.dagora.es/v1/"
+  SERVICE   = "http://api.dagora.es/v1/"
 
   api = (type, method, parameters = {}) ->
     promise = new Hope.Promise()

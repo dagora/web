@@ -5,12 +5,13 @@ class SearchCtrl extends Monocle.Controller
     "[data-context=search] > table" : "results"
 
   events:
-    "click header button"           : "search"
-    "keypress input"                : "onSearch"
+    "click [data-action=search]"    : "search"
+    "keypress input#txt-search"     : "onSearch"
 
   constructor: ->
     super
     __Model.Source.bind "create", @bindSourceCreated
+    @page = @el.attr("data-page")
 
   # BINDS
   bindSourceCreated: (instance) -> new __View.SourceListItem model: instance
@@ -31,7 +32,10 @@ class SearchCtrl extends Monocle.Controller
 
   search: ->
     if @txtSearch.val()
-      __Controller.Source.hide()
-      @url @txtSearch.val()
+      if @page is "landing"
+        window.location = "search.html##{@txtSearch.val()}"
+      else
+        __Controller.Source.hide()
+        @url @txtSearch.val()
 
 __Controller.Search = new SearchCtrl "section"

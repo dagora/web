@@ -9,99 +9,31 @@
     <link rel="stylesheet" href="static/dagora.css">
 </head>
 <body data-tuktuk="boxes">
-    <section data-page="search">
-        <header class="bck light">
-            <h3 class="on-left text bold">Dagora <span class="color theme icon bolt"></span></h3>
-
-            <div class="on-right">
-                <div class="form display inline">
-                    <input type="text"  id="txt-search" class="anchor" placeholder="Buscar..." />
+    <section class="landing" data-page="landing">
+        <div class="row text align center">
+            <div class="offset_3 column_6">
+                <h1>Dagora <span class="color theme icon bolt"></span></h1>
+                <div class="form block">
+                    <input type="text" id="txt-search" class="large anchor" placeholder="Buscar datos públicos..." />
+                    <button data-action="search" class="margin-right">Buscar</button>
+                    <button class="secondary">Añadir fuente</button>
                 </div>
-                <button class="small inline icon bolt"></button>
+                <br/>
+                <div class="text book">
+                    <strong>Dagora <span class="color theme icon bolt"></span></strong>
+                     - OpenSource & OpenData Project.
+
+                    <div>
+                        <a href="https://github.com/dagora/web" target="_blank" class="text color theme icon github margin-left"></a>
+                        <a href="http://twitter.com/soyjavi" target="_blank" class="text color theme icon twitter margin-left"></a>
+                        <a href="http://facebook.com/" target="_blank" class="text color theme icon facebook margin-left"></a>
+                    </div>
+                </div>
             </div>
-        </header>
-
-        <article class="scroll" data-context="search">
-            <table></table>
-        </article>
-
-        <article class="padding scroll" data-context="source">
-            <div id="overview" class="padding bck theme box"></div>
-
-            <div id="bar" class="padding bck dark margin-bottom box"></div>
-
-            <ul id="pie" class="margin-left margin-top margin-right box" data-tuktuk="totals" ></ul>
-
-            <ul data-tuktuk="totals" class="padding-left padding-right box">
-                <li>
-                    <strong class="text color theme on-left">0</strong>
-                    <small>&nbsp;fuentes</small></li>
-                <li>
-                    <strong class="text color theme on-left">0</strong>
-                    <small>&nbsp;photos</small>
-                </li>
-                <li>
-                    <strong class="text color theme on-left">0</strong>
-                    <small>&nbsp;valoraciones</small>
-                </li>
-            </ul>
-
-            <div class="box text book align center">
-                <hr>
-                Información actualiza el <span id="updated" class="text normal">10/04</span>
-            </div>
-        </article>
-
-        <footer>
-            <div class="on-left text book">
-                <strong class="text big">Dagora <span class="color theme icon bolt"></span></strong>
-                 - OpenSource & <a href="#" data-tuktuk-modal="add_source" class="text normal color theme underline">OpenData</a> Project.</div>
-
-            <nav class="on-right text big">
-                <a href="https://github.com/dagora/web" target="_blank" class="text color theme icon github margin-left"></a>
-                <a href="http://twitter.com/soyjavi" target="_blank" class="text color theme icon twitter margin-left"></a>
-                <a href="http://facebook.com/" target="_blank" class="text color theme icon facebook margin-left"></a>
-            </nav>
-        </footer>
+        </div>
     </section>
 
-    <!-- MODALS -->
-    <div id="add_source" data-tuktuk="modal" class="column_6">
-        <header>
-            <h4 class="text book inline">Añadir fuente en <strong>Dagora <span class="icon bolt"></span></strong></h4>
-            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
-        </header>
-        <article class="form text book">
-            <p>
-                Puedes añadir nuevas fuentes a nuestra Base de Datos, por favor cumplimenta este formulario:
-            </p>
-            <input id="title" type="text" placeholder="Título..." />
-            <input id="link" type="text" placeholder="Enlace url..." />
-            <input id="unit" type="text" placeholder="Unidad..." />
-            <textarea id="data" placeholder="Contenido CSV..."></textarea>
-        </article>
-        <footer class="bck light">
-            <button data-action="add" class="anchor secondary">Añadir fuente</button>
-        </footer>
-    </div>
-
-    <div id="source_added" data-tuktuk="modal" class="column_6">
-        <header>
-            <h4 class="inline">Dagora <span class="icon bolt"></span></h4>
-            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
-
-        </header>
-        <article class="text big book">
-            Fuente añadida correctamente, el sistema procesará los datos y los añadirá automáticamente a la Base de Datos.
-        </article>
-    </div>
-
-
     <script src="static/dagora.core.js"></script>
-    <script src='https://www.google.com/jsapi'></script>
-    <script type='text/javascript'>
-        google.load('visualization', '1', {'packages': ['geochart', 'corechart']});
-    </script>
     <script src="static/dagora.debug.js"></script>
 </body>
 </html>
