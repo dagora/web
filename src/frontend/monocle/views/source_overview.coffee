@@ -17,7 +17,7 @@ class __View.SourceOverview extends Monocle.View
         </li>
         <li>
             <span class="icon dashboard"></span>
-            <strong>{{percent}}%</strong>
+            <strong>{{progresion}}%</strong>
             <small>progresion</small>
         </li>
     </ul>
@@ -25,6 +25,6 @@ class __View.SourceOverview extends Monocle.View
 
   constructor: ->
     super
-    @model.percent = parseInt((@model.data[@model.data.length - 1].value * 100) / @model.data[0].value)
-
+    progresion = (@model.data[@model.data.length - 1].value * 100) / @model.data[0].value
+    @model.progresion = parseInt(progresion)
     @html @model

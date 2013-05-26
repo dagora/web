@@ -1,7 +1,7 @@
 class SearchCtrl extends Monocle.Controller
 
   elements:
-    "input"                         : "txtSearch"
+    "input#txt-search"              : "txtSearch"
     "[data-context=search] > table" : "results"
 
   events:
@@ -17,13 +17,8 @@ class SearchCtrl extends Monocle.Controller
 
   # EVENTS
   onSearch: (event) ->
-    __Controller.Source.reset()
+    __Controller.Source.hide()
     do @search if event.keyCode is 13
-
-  search: ->
-    if @txtSearch.val()
-      __Controller.Source.reset()
-      @url @txtSearch.val()
 
   # INSTANCE
   fetch: (value) ->
@@ -33,5 +28,10 @@ class SearchCtrl extends Monocle.Controller
         __Model.Source.create source for source in response.data.resultsList
       else
         alert "Algo ha ido mal"
+
+  search: ->
+    if @txtSearch.val()
+      __Controller.Source.hide()
+      @url @txtSearch.val()
 
 __Controller.Search = new SearchCtrl "section"

@@ -11,22 +11,20 @@ class SourceCtrl extends Monocle.Controller
 
   # BINDS
   bindStatCreated: (instance) =>
-    # RESET
+    # Reset
     @pies.html ""
     @updated.html instance.updated
-
-    # OVEWVIEW
+    # Ovewview
     new __View.SourceOverview model: instance
-    # BAR
+    # Bar
     new __View.GraphBar model: instance
-    # PIES
+    # Pies
     new __View.GraphPie model: title: "Dato 1", percent: 25
     new __View.GraphPie model: title: "Dato 2", percent: 75
     new __View.GraphPie model: title: "Dato 3", percent: 34
     new __View.GraphPie model: title: "Dato 4", percent: 17
-
+    # Active
     @boxes.addClass "active"
-
 
   # INSTANCE
   fetch: (id) ->
@@ -34,8 +32,7 @@ class SourceCtrl extends Monocle.Controller
     Dagora.api("GET", "sources/#{id}.json").then (error, response) =>
       __Model.Stat.create response.data if response?
 
-  reset: ->
-    @boxes.removeClass "active"
+  hide: -> @boxes.removeClass "active"
 
 
 __Controller.Source = new SourceCtrl "section article[data-context=source]"

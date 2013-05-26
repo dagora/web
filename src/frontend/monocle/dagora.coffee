@@ -12,16 +12,15 @@ window.Dagora = do ->
       data: parameters
       dataType: 'json'
       success: (response) =>
-        do TukTuk.Modal.hide
-        setTimeout ->
-          promise.done null, response
-        , 300
+        @_delayPromise promise, null, response
       error: (xhr, type, request) =>
-        do TukTuk.Modal.hide
-        setTimeout ->
-          promise.done xhr, null
-        , 300
+        @_delayPromise promise, xhr, null
     promise
 
+  _delayPromise: (promise, error, result) ->
+    do TukTuk.Modal.hide
+    setTimeout ->
+      promise.done error, result
+    , 300
 
   api: api

@@ -1,7 +1,7 @@
 class UrlCtrl extends Monocle.Controller
 
   elements:
-    "[data-context]" : "context"
+    "[data-context]"  : "context"
 
   constructor: ->
     super
@@ -9,20 +9,19 @@ class UrlCtrl extends Monocle.Controller
       ":context/:id"  : @source
       ":context"      : @search
     Monocle.Route.listen()
-    # Force URL
     @search null unless window.location.hash
 
   search: (parameters) ->
     @_context "search"
-    if parameters?.context? and parameters.context isnt "" then __Controller.Search.fetch parameters.context
+    if parameters?.context? and parameters.context isnt ""
+      __Controller.Search.fetch parameters.context
 
+  #INSTANCE
   source: (parameters) ->
     @_context "source"
     if parameters then __Controller.Source.fetch parameters.id
 
-
-  _context: (value) ->
-    @context.hide().siblings("[data-context=#{value}]").show()
+  _context: (value) -> @context.hide().siblings("[data-context=#{value}]").show()
 
 $ ->
-  __Controller.Url = new UrlCtrl "section"
+  __Controller.Url = new UrlCtrl "body"

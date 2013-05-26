@@ -7,16 +7,17 @@ class AddSourceCtrl extends Monocle.Controller
     "#data"                   : "txtData"
 
   events:
-    "click [data-action=add]" : "save"
+    "click [data-action=add]" : "onAdd"
 
-  save: (event) ->
+  # EVENTS
+  onAdd: (event) ->
     parameters =
       title : @txtTitle.val()
       link  : @txtLink.val()
       unit  : @txtUnit.val()
       data  : @txtData.val()
 
-    Dagora.api("POST", "sources.json", parameters).then (error, response) =>
+    Dagora.api("POST", "sources.json", parameters).then (error, response) ->
       TukTuk.Modal.show "source_added" if response
 
 __Controller.Add = new AddSourceCtrl "[data-tuktuk=modal]#add_source"

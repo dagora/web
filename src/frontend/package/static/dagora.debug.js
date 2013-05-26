@@ -17,21 +17,21 @@
         data: parameters,
         dataType: 'json',
         success: function(response) {
-          TukTuk.Modal.hide();
-          return setTimeout(function() {
-            return promise.done(null, response);
-          }, 300);
+          return _this._delayPromise(promise, null, response);
         },
         error: function(xhr, type, request) {
-          TukTuk.Modal.hide();
-          return setTimeout(function() {
-            return promise.done(xhr, null);
-          }, 300);
+          return _this._delayPromise(promise, xhr, null);
         }
       });
       return promise;
     };
     return {
+      _delayPromise: function(promise, error, result) {
+        TukTuk.Modal.hide();
+        return setTimeout(function() {
+          return promise.done(error, result);
+        }, 300);
+      },
       api: api
     };
   })();
@@ -237,11 +237,13 @@
 
     SourceOverview.prototype.container = "section > article #overview";
 
-    SourceOverview.prototype.template = "<h4 class=\"text bold uppercase\">{{title}}</h4>\n<ul class=\"margin\" data-tuktuk=\"totals\" id=\"overview\">\n    <li>\n        <span class=\"icon book\"></span>\n        <strong>{{data.length}}</strong>\n        <small>registros</small></li>\n    <li>\n        <strong>{{unit}}</strong>\n        <small>unidad</small>\n    </li>\n    <li>\n        <span class=\"icon dashboard\"></span>\n        <strong>{{percent}}%</strong>\n        <small>progresion</small>\n    </li>\n</ul>";
+    SourceOverview.prototype.template = "<h4 class=\"text bold uppercase\">{{title}}</h4>\n<ul class=\"margin\" data-tuktuk=\"totals\" id=\"overview\">\n    <li>\n        <span class=\"icon book\"></span>\n        <strong>{{data.length}}</strong>\n        <small>registros</small></li>\n    <li>\n        <strong>{{unit}}</strong>\n        <small>unidad</small>\n    </li>\n    <li>\n        <span class=\"icon dashboard\"></span>\n        <strong>{{progresion}}%</strong>\n        <small>progresion</small>\n    </li>\n</ul>";
 
     function SourceOverview() {
+      var progresion;
       SourceOverview.__super__.constructor.apply(this, arguments);
-      this.model.percent = parseInt((this.model.data[this.model.data.length - 1].value * 100) / this.model.data[0].value);
+      progresion = (this.model.data[this.model.data.length - 1].value * 100) / this.model.data[0].value;
+      this.model.progresion = parseInt(progresion);
       this.html(this.model);
     }
 
@@ -272,12 +274,11 @@
     };
 
     AddSourceCtrl.prototype.events = {
-      "click [data-action=add]": "save"
+      "click [data-action=add]": "onAdd"
     };
 
-    AddSourceCtrl.prototype.save = function(event) {
-      var parameters,
-        _this = this;
+    AddSourceCtrl.prototype.onAdd = function(event) {
+      var parameters;
       parameters = {
         title: this.txtTitle.val(),
         link: this.txtLink.val(),
@@ -309,7 +310,7 @@
     __extends(SearchCtrl, _super);
 
     SearchCtrl.prototype.elements = {
-      "input": "txtSearch",
+      "input#txt-search": "txtSearch",
       "[data-context=search] > table": "results"
     };
 
@@ -330,16 +331,9 @@
     };
 
     SearchCtrl.prototype.onSearch = function(event) {
-      __Controller.Source.reset();
+      __Controller.Source.hide();
       if (event.keyCode === 13) {
         return this.search();
-      }
-    };
-
-    SearchCtrl.prototype.search = function() {
-      if (this.txtSearch.val()) {
-        __Controller.Source.reset();
-        return this.url(this.txtSearch.val());
       }
     };
 
@@ -362,6 +356,13 @@
           return alert("Algo ha ido mal");
         }
       });
+    };
+
+    SearchCtrl.prototype.search = function() {
+      if (this.txtSearch.val()) {
+        __Controller.Source.hide();
+        return this.url(this.txtSearch.val());
+      }
     };
 
     return SearchCtrl;
@@ -443,7 +444,7 @@
       });
     };
 
-    SourceCtrl.prototype.reset = function() {
+    SourceCtrl.prototype.hide = function() {
       return this.boxes.removeClass("active");
     };
 
@@ -503,7 +504,7 @@
   })(Monocle.Controller);
 
   $(function() {
-    return __Controller.Url = new UrlCtrl("section");
+    return __Controller.Url = new UrlCtrl("body");
   });
 
 }).call(this);
