@@ -47,6 +47,13 @@ class Source
     private $title;
 
     /**
+     * @var string $hash
+     *
+     * @ORM\Column(name="hash", type="string")
+     */
+    private $hash;
+
+    /**
      * @var string $link
      *
      * @ORM\Column(name="link", type="string")
@@ -79,6 +86,7 @@ class Source
     public function setTitle($title)
     {
         $this->title = $title;
+        $this->hash = md5($title);
         return $this;
     }
 
