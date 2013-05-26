@@ -253,6 +253,9 @@ class SourceController extends Controller
      */
     public function updateAction($source_id)
     {
+        // disable
+        $this->get('dlayer')->createAccessDeniedException();
+
         // get source
         $source = $this->get('dlayer')->find('source', array('id' => $source_id));
 
@@ -285,6 +288,9 @@ class SourceController extends Controller
      */
     public function deleteAction($source_id)
     {
+        // disable
+        $this->get('dlayer')->createAccessDeniedException();
+
         // get source
         $source = $this->get('dlayer')->find('Source', array('id' => $source_id));
 
