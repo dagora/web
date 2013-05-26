@@ -85,103 +85,168 @@ class SourceController extends Controller
      */
     public function createAction()
     {
-        // get parameters
-        $params = json_decode($this->getRequest()->getContent(), true);
+        $conn = $this->container->get('doctrine.dbal.default_connection');
 
-        return $this->returnJSON($params, 'sources', null);
+        // it's a form
+        if ( $this->getRequest()->get('title') ) {
+            $params = array(
+                'title' => $this->getRequest()->get('title'),
+                'link'  => $this->getRequest()->get('link'),
+                'unit'  => $this->getRequest()->get('unit'),
+                'data'  => $this->getRequest()->get('data')
+            );
 
-        // create source
-        //$source = $this->get('dlayer')->create('Source', $params);
+            $this->importCsv($params);
 
-        // $fiveMBs = 5 * 1024 * 1024;
-        // $fp = fopen("php://temp/maxmemory:$fiveMBs", 'r+');
-        // fputs($fp, $params['data']);
-        // rewind($fp);
+            return $this->returnJSON(array(), 'sources');
+        }
+        // it's a JSON request
+        else {
+            $params = json_decode($this->getRequest()->getContent(), true);
 
-        // $data = array();
-        // while (($row = fgetcsv($fp, 1000, ",")) !== FALSE) {
-        //     $data[] = $row;
-        // }
-        // fclose($fp);
+            // update source
+            $source = $this->get('dlayer')->create('Source', $params);
 
-        // $line0        = $data[0];
-        // $columnsCount = count($line0);
+            return $this->returnShow($source, false);
+        }
+    }
 
-        // // we have several sources of information
-        // if ( $columnsCount > 2 ) {
+    /**
+     * Import a CSV file
+     * @param  array $params
+     */
+    private function importCsv($params) {
 
-        //     $allData = array();
+        $conn = $this->container->get('doctrine.dbal.default_connection');
 
-        //     // get dates
-        //     $dates = array_slice($line0, 1);
-        //     $avoidFirst = true;
-        //     foreach ($data as $lineData) {
+        // set content in file handler
+        $fiveMBs = 5 * 1024 * 1024;
+        $fp = fopen("php://temp/maxmemory:$fiveMBs", 'r+');
+        fputs($fp, $params['data']);
+        rewind($fp);
 
-        //         // do not insert first line
-        //         if ( $avoidFirst ) {
-        //             $avoidFirst = false;
-        //             continue;
-        //         }
+        // get array from CSV
+        $data = array();
+        while (($row = fgetcsv($fp, 1000, ",")) !== FALSE) {
+            $data[] = $row;
+        }
+        fclose($fp);
 
-        //         // source title
-        //         $titleSuffix = $lineData[0];
-        //         $sourceTitle = $params['title'] . ' - ' . $titleSuffix;
-        //         $sourceHash  = md5($sourceTitle);
+        // let's check how the CSV is structured. There can be 3 options
 
-        //         $sourcesToInsert[] = array(
-        //             'title' => $sourceTitle,
-        //             'link'  => $params['link'],
-        //             'unit'  => $params['unit']
-        //         );
+        // Option 1.
+        // date, value
+        // date2, value2
 
-        //         // values
-        //         $values = array_slice($lineData, 1);
+        // Option 2.
+        // x,             date1,   date2
+        // source_title,  value11, value12
+        // source_title2, value21, value22
 
-        //         $allData[ $sourceHash ] = array_combine($dates, $values);
-        //     }
+        // so let's check the first field to see if it's a date
+        $firstField = $data[0][0];
+        $dateAr     = \Dagora\CoreBundle\Entity\Data::convertDate($firstField);
 
-        //     // insert different sources
+        $dataToInsert    = array();
+        $sourcesToInsert = array();
 
+        // it's a date, so Option 1
+        if ( $dateAr ) {
 
-        //     // get sources
+            $sourceHash  = md5($params['title']);
 
+            $sourcesToInsert[] = '('
+                . $conn->quote(trim($params['title']), 'string').', '
+                . $conn->quote($sourceHash, 'string').', '
+                . $conn->quote($params['unit'], 'string').', '
+                . $conn->quote($params['link'], 'string').', now(), now())';
 
-        //     // insert all data
+            // the data is already on the desired format
+            $dataToInsert[ $sourceHash ] = $data;
+        }
+        // Option 2.
+        else {
 
-        //     print_r($allData);
-        // }
-        // die();
+            // get dates which are on the first line
+            $dates           = array_slice($data[0], 1);
+            $avoidFirst      = true;
+            foreach ($data as $lineData) {
 
-        // if ( isset($params['data']) ) {
+                // do not insert first line
+                if ( $avoidFirst ) {
+                    $avoidFirst = false;
+                    continue;
+                }
 
-        //     // we have an array
-        //     if ( is_array($params['data']) ) {
-        //         $allData = $params['data'];
-        //     }
-        //     // we don't have an array, we have a CSV
-        //     else {
-        //         $csvLines = explode("\n", $params['data']);
+                // source title
+                $titleSuffix = $lineData[0];
+                $sourceTitle = trim($params['title']) . ' - ' . trim($titleSuffix);
+                $sourceHash  = md5($sourceTitle);
 
-        //         $allData = array();
-        //         foreach ($csvLines as $line) {
-        //             $r = explode(',', $line);
-        //             $allData[] = array(
-        //                 'date'  => $r[0],
-        //                 'value' => $r[1]
-        //             );
-        //         }
-        //     }
+                $sourcesToInsert[] = '('
+                    . $conn->quote($sourceTitle, 'string').', '
+                    . $conn->quote($sourceHash, 'string').', '
+                    . $conn->quote($params['unit'], 'string').', '
+                    . $conn->quote($params['link'], 'string').', now(), now())';
 
-        //     print_r($allData);
-        //     die();
+                // values
+                $values = array_slice($lineData, 1);
 
-        //     foreach ($allData as $data) {
-        //         $data['source'] = $source;
-        //         $this->get('dlayer')->create('Data', $data);
-        //     }
-        // }
+                $dataToInsert[ $sourceHash ] = array_combine($dates, $values);
+            }
+        }
 
-        return $this->returnShow($source, false);
+        $now = date('Y-m-d H:m:s');
+
+        // insert masivo de sources
+        $r = $conn->executeUpdate('INSERT INTO source (title, hash, unit, link, created_at, updated_at)
+            VALUES '.join(',', $sourcesToInsert));
+
+        // get all sources
+        $results = $conn->fetchAll("SELECT id, hash FROM source where created_at > ?", array($now));
+
+        // create array that identifies source
+        $sources = array();
+        foreach ($results as $r) {
+            $sources[ $r['hash'] ] = $r['id'];
+        }
+        unset($results);
+
+        $insert = array();
+        foreach ($dataToInsert as $sourceCode => $data) {
+
+            foreach ($data as $date => $value ) {
+
+                $dateAr = \Dagora\CoreBundle\Entity\Data::convertDate($date);
+
+                $date     = $dateAr['date'];
+                $dateType = $dateAr['dateType'];
+
+                $insert[] = '('.$sources[ $sourceCode ].', '
+                    .$conn->quote($date, 'string').', '
+                    .$conn->quote($dateType, 'string').', '
+                    .$conn->quote($value, 'string').', now(), now())';
+            }
+        }
+
+        $offset = 0;
+        $MAX    = 10000;
+        $total  = count($insert);
+
+        //$this->output->writeln('Hay '.$total.' data points');
+
+        while ( $offset < $total ) {
+
+            $insertNow = array_slice($insert, $offset, $MAX);
+
+            // hacer insert masivo
+            $r = $conn->executeUpdate('INSERT INTO data (source_id, date, date_type, value, created_at, updated_at)
+                VALUES '.join(',', $insertNow));
+
+            $offset += $MAX;
+
+            //$this->output->writeln('  ...añadidos '.$offset);
+        }
     }
 
     /**
