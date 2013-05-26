@@ -188,31 +188,57 @@ class VectartCommand extends ContainerAwareCommand
      */
     private function importPresupuestos() {
 
+        $this->output->writeln('Importando PRESUPUESTOS');
+
+        $capitulos = array(
+            'i1' => "Ingresos - Capitulo I - Impuestos directos - ",
+            'i2' => "Ingresos - Capitulo II - Impuestos indirectos - ",
+            'i3' => "Ingresos - Capitulo III - Tasas y otros ingresos - ",
+            'i4' => "Ingresos - Capitulo IV - Transferencias corrientes - ",
+            'i5' => "Ingresos - Capitulo V - Ingresos patrimoniales - ",
+            'i6' => "Ingresos - Capitulo VI - Enajenación de inversiones reales - ",
+            'i7' => "Ingresos - Capitulo VII - Transferencias de capital - ",
+            'i8' => "Ingresos - Capitulo VIII - Activos financieros - ",
+            'i9' => "Ingresos - Capitulo IX - Pasivos financieros - ",
+            'iT' => "Ingresos Totales en ",
+            'g1' => "Gastos - Capitulo I - Gastos de personal - ",
+            'g2' => "Gastos - Capitulo II - Gastos en bienes corrientes y servicios - ",
+            'g3' => "Gastos - Capitulo III - Gastos financieros (intereses) - ",
+            'g4' => "Gastos - Capitulo IV - Transferencias corrientes - ",
+            //'g5' => "Gastos - Capitulo V - Fondo de Contingencia presupuestaria - ",
+            'g6' => "Gastos - Capitulo VI - Inversiones reales - ",
+            'g7' => "Gastos - Capitulo VII - Transferencias de capital - ",
+            'g8' => "Gastos - Capitulo VIII - Activos financieros - ",
+            'g9' => "Gastos - Capitulo IX - Pasivos financieros - ",
+            'gT' => "Gastos Totales en "
+        );
+
         // create sources first
         foreach ($this->cities as $key => $city) {
 
+            $cityId    = $city['id'];
             $cityTitle = $city['title'];
             $titles = array(
-                "Ingresos - Impuestos directos - ".$cityTitle,
-                "Ingresos - Impuestos indirectos - ".$cityTitle,
-                "Ingresos - Tasas y otros ingresos - ".$cityTitle,
-                "Ingresos - Transferencias corrientes - ".$cityTitle,
-                "Ingresos - Ingresos patrimoniales - ".$cityTitle,
-                "Ingresos - Enajenación de inversiones reales - ".$cityTitle,
-                "Ingresos - Transferencias de capital - ".$cityTitle,
-                "Ingresos - Activos financieros - ".$cityTitle,
-                "Ingresos - Pasivos financieros - ".$cityTitle,
-                "Ingresos Totales en ".$cityTitle,
-                "Gastos - Gastos de personal - ".$cityTitle,
-                "Gastos - Gastos en bienes corrientes y servicios - ".$cityTitle,
-                "Gastos - Gastos financieros (intereses) - ".$cityTitle,
-                "Gastos - Transferencias corrientes - ".$cityTitle,
-                //"Gastos - Fondo de Contingencia presupuestaria - ".$cityTitle,
-                "Gastos - Inversiones reales - ".$cityTitle,
-                "Gastos - Transferencias de capital - ".$cityTitle,
-                "Gastos - Activos financieros - ".$cityTitle,
-                "Gastos - Pasivos financieros - ".$cityTitle,
-                "Gastos Totales en ".$cityTitle
+                $capitulos['i1'] . $cityTitle,
+                $capitulos['i2'] . $cityTitle,
+                $capitulos['i3'] . $cityTitle,
+                $capitulos['i4'] . $cityTitle,
+                $capitulos['i5'] . $cityTitle,
+                $capitulos['i6'] . $cityTitle,
+                $capitulos['i7'] . $cityTitle,
+                $capitulos['i8'] . $cityTitle,
+                $capitulos['i9'] . $cityTitle,
+                $capitulos['iT'] . $cityTitle,
+                $capitulos['g1'] . $cityTitle,
+                $capitulos['g2'] . $cityTitle,
+                $capitulos['g3'] . $cityTitle,
+                $capitulos['g4'] . $cityTitle,
+                //$capitulos['g5'] . $cityTitle,
+                $capitulos['g6'] . $cityTitle,
+                $capitulos['g7'] . $cityTitle,
+                $capitulos['g8'] . $cityTitle,
+                $capitulos['g9'] . $cityTitle,
+                $capitulos['gT'] . $cityTitle,
             );
 
             foreach ($titles as $title) {
@@ -229,8 +255,7 @@ class VectartCommand extends ContainerAwareCommand
 
         foreach ( $years as $year ) {
 
-            $sourcesToInsert = array();
-            $dataToInsert    = array();
+            $dataToInsert = array();
 
             $results = $this->conn->fetchAll("SELECT * FROM vectart.eco_muni_presupuestos".$year);
 
@@ -244,26 +269,26 @@ class VectartCommand extends ContainerAwareCommand
                 //$this->output->writeln( $cityTitle);
 
                 $titles = array(
-                    'sourceCodeIngresos1'       => "Ingresos - Impuestos directos - ".$cityTitle,
-                    'sourceCodeIngresos2'       => "Ingresos - Impuestos indirectos - ".$cityTitle,
-                    'sourceCodeIngresos3'       => "Ingresos - Tasas y otros ingresos - ".$cityTitle,
-                    'sourceCodeIngresos4'       => "Ingresos - Transferencias corrientes - ".$cityTitle,
-                    'sourceCodeIngresos5'       => "Ingresos - Ingresos patrimoniales - ".$cityTitle,
-                    'sourceCodeIngresos6'       => "Ingresos - Enajenación de inversiones reales - ".$cityTitle,
-                    'sourceCodeIngresos7'       => "Ingresos - Transferencias de capital - ".$cityTitle,
-                    'sourceCodeIngresos8'       => "Ingresos - Activos financieros - ".$cityTitle,
-                    'sourceCodeIngresos9'       => "Ingresos - Pasivos financieros - ".$cityTitle,
-                    'sourceCodeIngresosTotales' => "Ingresos Totales en ".$cityTitle,
-                    'sourceCodeGastos1'         => "Gastos - Gastos de personal - ".$cityTitle,
-                    'sourceCodeGastos2'         => "Gastos - Gastos en bienes corrientes y servicios - ".$cityTitle,
-                    'sourceCodeGastos3'         => "Gastos - Gastos financieros (intereses) - ".$cityTitle,
-                    'sourceCodeGastos4'         => "Gastos - Transferencias corrientes - ".$cityTitle,
-                    //'sourceCodeGastos5'         => "Gastos - Fondo de Contingencia presupuestaria - ".$cityTitle,
-                    'sourceCodeGastos6'         => "Gastos - Inversiones reales - ".$cityTitle,
-                    'sourceCodeGastos7'         => "Gastos - Transferencias de capital - ".$cityTitle,
-                    'sourceCodeGastos8'         => "Gastos - Activos financieros - ".$cityTitle,
-                    'sourceCodeGastos9'         => "Gastos - Pasivos financieros - ".$cityTitle,
-                    'sourceCodeGastosTotales'   => "Gastos Totales en ".$cityTitle
+                    'sourceCodeIngresos1'       => $capitulos['i1'] . $cityTitle,
+                    'sourceCodeIngresos2'       => $capitulos['i2'] . $cityTitle,
+                    'sourceCodeIngresos3'       => $capitulos['i3'] . $cityTitle,
+                    'sourceCodeIngresos4'       => $capitulos['i4'] . $cityTitle,
+                    'sourceCodeIngresos5'       => $capitulos['i5'] . $cityTitle,
+                    'sourceCodeIngresos6'       => $capitulos['i6'] . $cityTitle,
+                    'sourceCodeIngresos7'       => $capitulos['i7'] . $cityTitle,
+                    'sourceCodeIngresos8'       => $capitulos['i8'] . $cityTitle,
+                    'sourceCodeIngresos9'       => $capitulos['i9'] . $cityTitle,
+                    'sourceCodeIngresosTotales' => $capitulos['iT'] . $cityTitle,
+                    'sourceCodeGastos1'         => $capitulos['g1'] . $cityTitle,
+                    'sourceCodeGastos2'         => $capitulos['g2'] . $cityTitle,
+                    'sourceCodeGastos3'         => $capitulos['g3'] . $cityTitle,
+                    'sourceCodeGastos4'         => $capitulos['g4'] . $cityTitle,
+                    //'sourceCodeGastos5'         => $capitulos['g5'] . $cityTitle,
+                    'sourceCodeGastos6'         => $capitulos['g6'] . $cityTitle,
+                    'sourceCodeGastos7'         => $capitulos['g7'] . $cityTitle,
+                    'sourceCodeGastos8'         => $capitulos['g8'] . $cityTitle,
+                    'sourceCodeGastos9'         => $capitulos['g9'] . $cityTitle,
+                    'sourceCodeGastosTotales'   => $capitulos['gT'] . $cityTitle
                 );
 
                 foreach ($titles as $key => $sourceTitle) {
