@@ -14,11 +14,12 @@ class UrlCtrl extends Monocle.Controller
 
   search: (parameters) ->
     @_context "search"
-
     if parameters then __Controller.Search.fetch parameters.context
 
-  source: ->
+  source: (parameters) ->
     @_context "source"
+    if parameters then __Controller.Source.fetch parameters.id
+
 
   _context: (value) ->
     @context.hide().siblings("[data-context=#{value}]").show()

@@ -38,26 +38,6 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  __Model.Query = (function(_super) {
-
-    __extends(Query, _super);
-
-    function Query() {
-      return Query.__super__.constructor.apply(this, arguments);
-    }
-
-    Query.fields("id", "title", "link", "unit", "unit", "data");
-
-    return Query;
-
-  })(Monocle.Model);
-
-}).call(this);
-
-(function() {
-  var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
   __Model.Source = (function(_super) {
 
     __extends(Source, _super);
@@ -78,6 +58,26 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+  __Model.Stat = (function(_super) {
+
+    __extends(Stat, _super);
+
+    function Stat() {
+      return Stat.__super__.constructor.apply(this, arguments);
+    }
+
+    Stat.fields("id", "title", "link", "unit", "unit", "data", "created", "updated");
+
+    return Stat;
+
+  })(Monocle.Model);
+
+}).call(this);
+
+(function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
   __View.GraphBar = (function(_super) {
     var instance;
 
@@ -87,12 +87,19 @@
 
     GraphBar.prototype.container = "section > article #bar";
 
-    GraphBar.prototype.template = "<div data-graph=\"bar\">\n  <h4 class=\"text bold color theme uppercase\">{{title}} <span class=\"text book color default italic\">({{source}})</span></h4>\n  <div class=\"graph\"></div>\n</div>";
+    GraphBar.prototype.template = "<div data-graph=\"bar\">\n  <h4 class=\"text bold color theme uppercase\">PROGRESION EN {{unit}}</h4>\n  <div class=\"graph\"></div>\n</div>";
 
     function GraphBar() {
-      var data, options;
+      var data, options, stat, _i, _len, _ref;
       GraphBar.__super__.constructor.apply(this, arguments);
       this.html(this.model);
+      data = [["Año", this.model.unit]];
+      _ref = this.model.data;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        stat = _ref[_i];
+        data.push([stat.date, stat.value]);
+      }
+      data = google.visualization.arrayToDataTable(data);
       options = {
         animation: {
           duration: 1000,
@@ -101,7 +108,8 @@
         areaOpacity: 0.1,
         backgroundColor: "#ecf0f1",
         chartArea: {
-          width: "100%"
+          width: "100%",
+          top: 20
         },
         colors: ["#bdc3c7"],
         fontName: "Oswald",
@@ -122,10 +130,8 @@
             count: 0
           }
         },
-        width: "100%",
-        height: 292
+        height: 232
       };
-      data = google.visualization.arrayToDataTable(this.model.data);
       this.instance = new google.visualization.ColumnChart(this.el.find(".graph").get(0));
       this.instance.draw(data, options);
     }
@@ -149,7 +155,7 @@
 
     GraphPie.prototype.container = "section > article #pie";
 
-    GraphPie.prototype.template = "<li data-graph=\"pie\">\n  <h4 class=\"text bold color theme uppercase\">{{title}}</h4>\n  <div class=\"graph\"></div>\n</li>";
+    GraphPie.prototype.template = "<li class=\"margin-top\" data-graph=\"pie\">\n  <h4 class=\"text bold color theme uppercase\">{{title}}</h4>\n  <div class=\"graph\"></div>\n</li>";
 
     function GraphPie() {
       var data, options;
@@ -160,6 +166,7 @@
         legend: {
           position: 'none'
         },
+        fontSize: 18,
         fontName: "Oswald",
         chartArea: {
           width: "75%",
@@ -204,8 +211,7 @@
     }
 
     SourceListItem.prototype.onClick = function(event) {
-      console.error(this.model);
-      return this.url("/" + this.model.id);
+      return this.url("" + window.location.hash + "/" + this.model.id);
     };
 
     return SourceListItem;
@@ -215,178 +221,174 @@
 }).call(this);
 
 (function() {
-  var QueryCtrl,
-    __hasProp = {}.hasOwnProperty,
+  var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  QueryCtrl = (function(_super) {
-    var URL;
+  __View.SourceOverview = (function(_super) {
+    var instance;
 
-    __extends(QueryCtrl, _super);
+    __extends(SourceOverview, _super);
 
-    URL = "http://api.dagora.es/";
+    instance = void 0;
 
-    QueryCtrl.prototype.elements = {
-      "input": "txtSearch",
-      ".box": "boxes",
-      "#pie": "pies"
-    };
+    SourceOverview.prototype.container = "section > article #overview";
 
-    function QueryCtrl() {
-      QueryCtrl.__super__.constructor.apply(this, arguments);
-      this.boxes.removeClass("hidden");
+    SourceOverview.prototype.template = "<h4 class=\"text bold uppercase\">{{title}}</h4>\n<ul class=\"margin\" data-tuktuk=\"totals\" id=\"overview\">\n    <li>\n        <span class=\"icon book\"></span>\n        <strong>{{data.length}}</strong>\n        <small>registros</small></li>\n    <li>\n        <strong>{{unit}}</strong>\n        <small>unidad</small>\n    </li>\n    <li>\n        <span class=\"icon dashboard\"></span>\n        <strong>{{percent}}%</strong>\n        <small>progresion</small>\n    </li>\n</ul>";
+
+    function SourceOverview() {
+      SourceOverview.__super__.constructor.apply(this, arguments);
+      this.model.percent = parseInt((this.model.data[this.model.data.length - 1].value * 100) / this.model.data[0].value);
+      this.html(this.model);
     }
 
-    QueryCtrl.prototype.onKeyPress = function(event) {
-      this.boxes.removeClass("active");
-      this.pies.html("");
-      if (event.keyCode === 13) {
-        return this.search();
-      }
-    };
+    return SourceOverview;
 
-    QueryCtrl.prototype.search = function() {
-      var mock, query;
-      TukTuk.Modal.loading();
-      this.boxes.addClass("active");
-      mock = [['Year', 'Sales'], ['Apr/20', 1000], ['xxx/XX', 1234], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170], ['xxx/XX', 1170]];
-      query = __Model.Query.create({
-        title: "TITULO DE CONSULTA",
-        source: "Publico.es",
-        unit: "people",
-        data: mock
-      });
-      new __View.GraphBar({
-        model: query
-      });
-      new __View.GraphPie({
-        model: {
-          title: "Percent.1",
-          percent: 25
-        }
-      });
-      new __View.GraphPie({
-        model: {
-          title: "Percent.2",
-          percent: 75
-        }
-      });
-      new __View.GraphPie({
-        model: {
-          title: "Percent.3",
-          percent: 34
-        }
-      });
-      new __View.GraphPie({
-        model: {
-          title: "Percent.4",
-          percent: 17
-        }
-      });
-      return TukTuk.Modal.hide();
-    };
-
-    return QueryCtrl;
-
-  })(Monocle.Controller);
-
-  __Controller.Query = new QueryCtrl("section");
+  })(Monocle.View);
 
 }).call(this);
 
 (function() {
-  var SourcesCtrl,
+  var SearchCtrl,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  SourcesCtrl = (function(_super) {
+  SearchCtrl = (function(_super) {
 
-    __extends(SourcesCtrl, _super);
+    __extends(SearchCtrl, _super);
 
-    SourcesCtrl.prototype.elements = {
+    SearchCtrl.prototype.elements = {
       "input": "txtSearch",
       "[data-context=search] > table": "results"
     };
 
-    SourcesCtrl.prototype.events = {
+    SearchCtrl.prototype.events = {
       "click button": "search",
       "keypress input": "onSearch"
     };
 
-    function SourcesCtrl() {
-      SourcesCtrl.__super__.constructor.apply(this, arguments);
+    function SearchCtrl() {
+      SearchCtrl.__super__.constructor.apply(this, arguments);
       __Model.Source.bind("create", this.bindSourceCreated);
     }
 
-    SourcesCtrl.prototype.bindSourceCreated = function(instance) {
+    SearchCtrl.prototype.bindSourceCreated = function(instance) {
       return new __View.SourceListItem({
         model: instance
       });
     };
 
-    SourcesCtrl.prototype.onSearch = function(event) {
+    SearchCtrl.prototype.onSearch = function(event) {
       if (event.keyCode === 13 && (this.txtSearch.val() != null)) {
         return this.url(this.txtSearch.val());
       }
     };
 
-    SourcesCtrl.prototype.fetch = function(value) {
+    SearchCtrl.prototype.fetch = function(value) {
       var _this = this;
-      console.log("fetch", value);
       this.results.html("");
       return Dagora.api("GET", "sources.json", {
         s: value
-      }).then(function(error, sources) {
-        var source, _i, _len, _results;
-        if (sources != null) {
+      }).then(function(error, response) {
+        var source, _i, _len, _ref, _results;
+        if (response != null) {
+          _ref = response.data.resultsList;
           _results = [];
-          for (_i = 0, _len = sources.length; _i < _len; _i++) {
-            source = sources[_i];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            source = _ref[_i];
             _results.push(__Model.Source.create(source));
           }
           return _results;
         } else {
-          return _this.mock();
+          return alert("Algo ha ido mal");
         }
       });
     };
 
-    SourcesCtrl.prototype.mock = function() {
-      __Model.Source.create({
-        id: "1",
-        title: "t1",
-        link: "u1",
-        created: new Date(),
-        updated: new Date()
-      });
-      __Model.Source.create({
-        id: "2",
-        title: "t2",
-        link: "u2",
-        created: new Date(),
-        updated: new Date()
-      });
-      __Model.Source.create({
-        id: "3",
-        title: "t3",
-        link: "u3",
-        created: new Date(),
-        updated: new Date()
-      });
-      return __Model.Source.create({
-        id: "4",
-        title: "t4",
-        link: "u4",
-        created: new Date(),
-        updated: new Date()
-      });
-    };
-
-    return SourcesCtrl;
+    return SearchCtrl;
 
   })(Monocle.Controller);
 
-  __Controller.Sources = new SourcesCtrl("section");
+  __Controller.Search = new SearchCtrl("section");
+
+}).call(this);
+
+(function() {
+  var SourceCtrl,
+    _this = this,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  SourceCtrl = (function(_super) {
+
+    __extends(SourceCtrl, _super);
+
+    SourceCtrl.prototype.elements = {
+      ".box": "boxes",
+      "#pie": "pies",
+      "#updated": "updated"
+    };
+
+    function SourceCtrl() {
+      var _this = this;
+      this.bindStatCreated = function(instance) {
+        return SourceCtrl.prototype.bindStatCreated.apply(_this, arguments);
+      };
+      SourceCtrl.__super__.constructor.apply(this, arguments);
+      __Model.Stat.bind("create", this.bindStatCreated);
+      this.boxes.removeClass("hidden");
+    }
+
+    SourceCtrl.prototype.bindStatCreated = function(instance) {
+      this.pies.html("");
+      this.updated.html(instance.updated);
+      new __View.SourceOverview({
+        model: instance
+      });
+      new __View.GraphBar({
+        model: instance
+      });
+      new __View.GraphPie({
+        model: {
+          title: "Dato 1",
+          percent: 25
+        }
+      });
+      new __View.GraphPie({
+        model: {
+          title: "Dato 2",
+          percent: 75
+        }
+      });
+      new __View.GraphPie({
+        model: {
+          title: "Dato 3",
+          percent: 34
+        }
+      });
+      new __View.GraphPie({
+        model: {
+          title: "Dato 4",
+          percent: 17
+        }
+      });
+      return this.boxes.addClass("active");
+    };
+
+    SourceCtrl.prototype.fetch = function(id) {
+      var _this = this;
+      __Model.Stat.destroyAll();
+      return Dagora.api("GET", "sources/" + id + ".json").then(function(error, response) {
+        if (response != null) {
+          return __Model.Stat.create(response.data);
+        }
+      });
+    };
+
+    return SourceCtrl;
+
+  })(Monocle.Controller);
+
+  __Controller.Source = new SourceCtrl("section article[data-context=source]");
 
 }).call(this);
 
@@ -411,20 +413,22 @@
       });
       Monocle.Route.listen();
       if (!window.location.hash) {
-        this.search();
+        this.search(null);
       }
     }
 
     UrlCtrl.prototype.search = function(parameters) {
       this._context("search");
       if (parameters) {
-        return __Controller.Sources.fetch(parameters.context);
+        return __Controller.Search.fetch(parameters.context);
       }
     };
 
-    UrlCtrl.prototype.source = function() {
+    UrlCtrl.prototype.source = function(parameters) {
       this._context("source");
-      return this;
+      if (parameters) {
+        return __Controller.Source.fetch(parameters.id);
+      }
     };
 
     UrlCtrl.prototype._context = function(value) {

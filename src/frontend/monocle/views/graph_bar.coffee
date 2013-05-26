@@ -6,7 +6,7 @@ class __View.GraphBar extends Monocle.View
 
   template: """
     <div data-graph="bar">
-      <h4 class="text bold color theme uppercase">{{title}} <span class="text book color default italic">({{source}})</span></h4>
+      <h4 class="text bold color theme uppercase">PROGRESION EN {{unit}}</h4>
       <div class="graph"></div>
     </div>
   """
@@ -15,11 +15,16 @@ class __View.GraphBar extends Monocle.View
     super
     @html @model
 
+    #Parse Data
+    data = [["Año", @model.unit]]
+    data.push([stat.date, stat.value]) for stat in @model.data
+    data = google.visualization.arrayToDataTable(data)
+
     options =
-      animation: {duration: 1000, easing: "linear"}
+      animation: duration: 1000, easing: "linear"
       areaOpacity: 0.1
       backgroundColor: "#ecf0f1"
-      chartArea: width:"100%"
+      chartArea: width:"100%", top: 20
       colors: ["#bdc3c7"]
       fontName: "Oswald"
       fontSize: 12
@@ -27,9 +32,8 @@ class __View.GraphBar extends Monocle.View
       pointSize: 16
       hAxis: baselineColor: "#f00", textStyle: color: "#aaa"
       vAxis: gridlines: color: "#ecf0f1", count: 0
-      width: "100%"
-      height: 292
+      height: 232
 
-    data = google.visualization.arrayToDataTable(@model.data)
+
     @instance = new google.visualization.ColumnChart @el.find(".graph").get(0)
     @instance.draw data, options

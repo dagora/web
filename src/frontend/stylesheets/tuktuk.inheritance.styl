@@ -1,7 +1,7 @@
 @import "__init.styl"
 
 [data-graph=bar]
-  height: 320px
+  height: 256px
 
 [data-graph=pie]
   width: 25%
@@ -14,17 +14,17 @@
     border-right: solid 1px lighten(THEME, 30%)
 
   & .icon
-    font-size: 3em
+    font-size: 2.5em
 
   & strong
     display: inline-block
-    font-size: 4.5em
-    margin-left: 0.2em
+    font-size: 4em
+    margin-left: 0.1em
 
   & small
     display: block
-    margin-top: 1em
-    font-weight: bold
+    margin-top: 0.25em
+    // font-weight: bold
 
   & .icon, small
     color: lighten(THEME, 65%)
@@ -54,3 +54,7 @@ header
     transition-delay: 200ms
   &:nth-child(3)
     transition-delay: 400ms
+  &:nth-child(4)
+    transition-delay: 600ms
+  &:nth-child(5)
+    transition-delay: 800ms

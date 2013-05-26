@@ -1,61 +1,38 @@
 class SourceCtrl extends Monocle.Controller
 
-  URL = "http://api.dagora.es/"
-
   elements:
     ".box"          : "boxes"
     "#pie"          : "pies"
+    "#updated"      : "updated"
 
   constructor: ->
     super
+    __Model.Stat.bind "create", @bindStatCreated
     @boxes.removeClass "hidden"
 
-  fetch: (id) ->
-    Dagora.api("GET", "sources/#{id}").then (error, source) =>
-      if source?
-        console.error "ss"
-      else
-        @mock()
-        # console.error "ERROR: ", error
+  # BINDS
+  bindStatCreated: (instance) =>
+    # RESET
+    @pies.html ""
+    @updated.html instance.updated
 
-  mock: ->
-    TukTuk.Modal.loading()
+    # OVEWVIEW
+    new __View.SourceOverview model: instance
+    # BAR
+    new __View.GraphBar model: instance
+    # PIES
+    new __View.GraphPie model: title: "Dato 1", percent: 25
+    new __View.GraphPie model: title: "Dato 2", percent: 75
+    new __View.GraphPie model: title: "Dato 3", percent: 34
+    new __View.GraphPie model: title: "Dato 4", percent: 17
+
     @boxes.addClass "active"
 
-    # BAR
-    mock = [
-      ['Year', 'Sales'],
-      ['Apr/20',  1000],
-      ['xxx/XX',  1234],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170],
-      ['xxx/XX',  1170]
-    ]
-    query = __Model.Query.create
-      title: "TITULO DE CONSULTA"
-      source: "Publico.es"
-      unit: "people"
-      data: mock
 
-    # BAR
-    new __View.GraphBar model: query
+  # INSTANCE
+  fetch: (id) ->
+    __Model.Stat.destroyAll()
+    Dagora.api("GET", "sources/#{id}.json").then (error, response) =>
+      __Model.Stat.create response.data if response?
 
-    # PIE
-    new __View.GraphPie model: title: "Percent.1", percent: 25
-    new __View.GraphPie model: title: "Percent.2", percent: 75
-    new __View.GraphPie model: title: "Percent.3", percent: 34
-    new __View.GraphPie model: title: "Percent.4", percent: 17
-
-    TukTuk.Modal.hide()
-
-__Controller.Source = new SourceCtrl "section"
+__Controller.Source = new SourceCtrl "section article[data-context=source]"

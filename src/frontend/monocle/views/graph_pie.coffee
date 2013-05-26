@@ -5,7 +5,7 @@ class __View.GraphPie extends Monocle.View
   container: "section > article #pie"
 
   template: """
-    <li data-graph="pie">
+    <li class="margin-top" data-graph="pie">
       <h4 class="text bold color theme uppercase">{{title}}</h4>
       <div class="graph"></div>
     </li>
@@ -17,8 +17,7 @@ class __View.GraphPie extends Monocle.View
     options =
       colors: ["3498db", "#ddd"]
       legend: position: 'none'
-      # height: 200
-      # fontSize: 14
+      fontSize: 18
       fontName: "Oswald"
       chartArea: width:"75%", height:"75%", top: 0
       tooltip: trigger: "focus", showColorCode: true

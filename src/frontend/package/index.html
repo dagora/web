@@ -11,7 +11,7 @@
 <body data-tuktuk="boxes">
     <section>
         <header class="bck light">
-            <h3 class="on-left text bold">DAGORA <span class="tag bck theme">BETA!</span></h3>
+            <h3 class="on-left text bold">DAGORA <span class="color theme icon bolt"></span></h3>
 
             <div class="on-right">
                 <div class="form display inline">
@@ -26,59 +26,41 @@
         </article>
 
         <article class="padding scroll" data-context="source">
-            <div class="padding bck theme box hidden">
-                <h4 class="text bold">OVERVIEW</h4>
-                <ul class="margin" data-tuktuk="totals" id="overview">
-                    <li>
-                        <span class="icon book"></span>
-                        <strong>3609</strong>
-                        <small>elementos</small></li>
-                    <li>
-                        <span class="icon rss"></span>
-                        <strong>138</strong>
-                        <small>fuentes</small>
-                    </li>
-                    <li>
-                        <span class="icon dashboard"></span>
-                        <strong>25%</strong>
-                        <small>rebote</small>
-                    </li>
-                </ul>
-            </div>
-            <!-- BAR GRAPH -->
+            <div id="overview" class="padding bck theme box hidden"></div>
+
             <div id="bar" class="padding bck dark margin-bottom box hidden"></div>
 
-            <div class="padding margin-top box hidden">
-                <!-- <h4 class="text bold color theme">PIE</h4> -->
-                <!-- PIE GRAPH -->
-                <ul class="margin" data-tuktuk="totals" id="pie"></ul>
+            <ul id="pie" class="margin-left margin-top margin-right box hidden" data-tuktuk="totals" ></ul>
 
-                <ul data-tuktuk="totals">
-                    <li>
-                        <strong class="text color theme on-left">14</strong>
-                        <small>&nbsp;surveys</small></li>
-                    <li>
-                        <strong class="text color theme on-left">3,420</strong>
-                        <small>&nbsp;photos</small>
-                    </li>
-                    <li>
-                        <strong class="text color theme on-left">99</strong>
-                        <small>&nbsp;ratings</small>
-                    </li>
-                </ul>
+            <ul data-tuktuk="totals" class="padding-left padding-right box hidden">
+                <li>
+                    <strong class="text color theme on-left">0</strong>
+                    <small>&nbsp;fuentes</small></li>
+                <li>
+                    <strong class="text color theme on-left">0</strong>
+                    <small>&nbsp;photos</small>
+                </li>
+                <li>
+                    <strong class="text color theme on-left">0</strong>
+                    <small>&nbsp;valoraciones</small>
+                </li>
+            </ul>
+
+            <div class="box hidden text book align center">
                 <hr>
-                <div class="text align center">
-                    Avg numbeer of actions per user: <strong class="text bold color theme">52.02</strong>
-                </div>
+                Información actualiza el <span id="updated" class="text normal">10/04</span>
             </div>
         </article>
 
         <footer>
-            <div class="on-left text book">Fuentes obtenidas <a href="#" class="text normal underline color theme">enlace</a></div>
+            <div class="on-left text book">
+                <strong>Dagora</strong>
+                <span class="color theme icon bolt"></span> - OpenSource & OpenData <a href="https://github.com/dagora/web" target="_blank" class="text underline color theme">project</a>.</div>
+
             <nav class="on-right text big">
-                <a href="https://github.com/dagora/web" class="text color theme icon github margin-left"></a>
-                <a href="http://twitter.com/soyjavi" class="text color theme icon twitter margin-left"></a>
-                <a href="http://facebook.com/" class="text color theme icon facebook margin-left"></a>
+                <a href="https://github.com/dagora/web" target="_blank" class="text color theme icon github margin-left"></a>
+                <a href="http://twitter.com/soyjavi" target="_blank" class="text color theme icon twitter margin-left"></a>
+                <a href="http://facebook.com/" target="_blank" class="text color theme icon facebook margin-left"></a>
             </nav>
         </footer>
     </section>
