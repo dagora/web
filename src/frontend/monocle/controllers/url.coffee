@@ -10,15 +10,15 @@ class UrlCtrl extends Monocle.Controller
       ":context"      : @search
     Monocle.Route.listen()
     # Force URL
-    do @search unless window.location.hash
+    @search null unless window.location.hash
 
   search: (parameters) ->
     @_context "search"
-    if parameters then __Controller.Sources.fetch parameters.context
+
+    if parameters then __Controller.Search.fetch parameters.context
 
   source: ->
     @_context "source"
-    @
 
   _context: (value) ->
     @context.hide().siblings("[data-context=#{value}]").show()

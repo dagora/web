@@ -1,26 +1,24 @@
-class QueryCtrl extends Monocle.Controller
+class SourceCtrl extends Monocle.Controller
 
   URL = "http://api.dagora.es/"
 
   elements:
-    "input"         : "txtSearch"
     ".box"          : "boxes"
     "#pie"          : "pies"
-
-  # events:
-  #   "click button"    : "search"
-  #   "keypress input"  : "onKeyPress"
 
   constructor: ->
     super
     @boxes.removeClass "hidden"
 
-  onKeyPress: (event) ->
-    @boxes.removeClass "active"
-    @pies.html ""
-    do @search if event.keyCode is 13
+  fetch: (id) ->
+    Dagora.api("GET", "sources/#{id}").then (error, source) =>
+      if source?
+        console.error "ss"
+      else
+        @mock()
+        # console.error "ERROR: ", error
 
-  search: ->
+  mock: ->
     TukTuk.Modal.loading()
     @boxes.addClass "active"
 
@@ -60,4 +58,4 @@ class QueryCtrl extends Monocle.Controller
 
     TukTuk.Modal.hide()
 
-__Controller.Query = new QueryCtrl "section"
+__Controller.Source = new SourceCtrl "section"

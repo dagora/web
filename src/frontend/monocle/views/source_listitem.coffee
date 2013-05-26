@@ -21,7 +21,6 @@ class __View.SourceListItem extends Monocle.View
     super
     @append @model
 
-
   onClick: (event) ->
     console.error @model
     @url "/" + @model.id
