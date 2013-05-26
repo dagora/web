@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="static/dagora.core.css">
     <link rel="stylesheet" href="static/dagora.css">
 </head>
-<body data-tuktuk="boxes">
+<body data-tuktuk="boxes" data-page="search">
     <section>
         <header class="bck light">
             <h3 class="on-left text bold">DAGORA <span class="color theme icon bolt"></span></h3>
@@ -26,13 +26,13 @@
         </article>
 
         <article class="padding scroll" data-context="source">
-            <div id="overview" class="padding bck theme box hidden"></div>
+            <div id="overview" class="padding bck theme box"></div>
 
-            <div id="bar" class="padding bck dark margin-bottom box hidden"></div>
+            <div id="bar" class="padding bck dark margin-bottom box"></div>
 
-            <ul id="pie" class="margin-left margin-top margin-right box hidden" data-tuktuk="totals" ></ul>
+            <ul id="pie" class="margin-left margin-top margin-right box" data-tuktuk="totals" ></ul>
 
-            <ul data-tuktuk="totals" class="padding-left padding-right box hidden">
+            <ul data-tuktuk="totals" class="padding-left padding-right box">
                 <li>
                     <strong class="text color theme on-left">0</strong>
                     <small>&nbsp;fuentes</small></li>
@@ -46,7 +46,7 @@
                 </li>
             </ul>
 
-            <div class="box hidden text book align center">
+            <div class="box text book align center">
                 <hr>
                 Información actualiza el <span id="updated" class="text normal">10/04</span>
             </div>
@@ -55,7 +55,7 @@
         <footer>
             <div class="on-left text book">
                 <strong>Dagora</strong>
-                <span class="color theme icon bolt"></span> - OpenSource & OpenData <a href="https://github.com/dagora/web" target="_blank" class="text underline color theme">project</a>.</div>
+                <span class="color theme icon bolt"></span> - OpenSource & <a href="#" data-tuktuk-modal="add_source" class="text bold color theme">OpenData</a> Project.</div>
 
             <nav class="on-right text big">
                 <a href="https://github.com/dagora/web" target="_blank" class="text color theme icon github margin-left"></a>
@@ -65,15 +65,37 @@
         </footer>
     </section>
 
-    <div id="welcome" data-tuktuk="modal" class="column_5">
+    <!-- MODALS -->
+    <div id="add_source" data-tuktuk="modal" class="column_6">
         <header>
-            <h4 class="text book inline">Dagora</h4>
+            <h4 class="text book inline">Añadir fuente en <strong>Dagora <span class="icon bolt"></span></strong></h4>
             <button data-modal="close" class="transparent small on-right inline icon remove"></button>
         </header>
-        <article>
-            Bienvenido a la primera versión de  Dagora ...
+        <article class="form text book">
+            <p>
+                Puedes añadir nuevas fuentes a nuestra Base de Datos, por favor cumplimenta este formulario:
+            </p>
+            <input id="title" type="text" placeholder="Título..." />
+            <input id="link" type="text" placeholder="Enlace url..." />
+            <input id="unit" type="text" placeholder="Unidad..." />
+            <textarea id="data" placeholder="Contenido CSV..."></textarea>
+        </article>
+        <footer class="bck light">
+            <button data-action="add" class="anchor secondary">Save</button>
+        </footer>
+    </div>
+
+    <div id="source_added" data-tuktuk="modal" class="column_6">
+        <header>
+            <h4 class="inline">Dagora <span class="icon bolt"></span></h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+
+        </header>
+        <article class="text big book">
+            Fuente añadida correctamente, el sistema procesará los datos y los añadirá automáticamente a la Base de Datos.
         </article>
     </div>
+
 
     <script src="static/dagora.core.js"></script>
     <script src='https://www.google.com/jsapi'></script>

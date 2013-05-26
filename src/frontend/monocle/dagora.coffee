@@ -13,10 +13,14 @@ window.Dagora = do ->
       dataType: 'json'
       success: (response) =>
         do TukTuk.Modal.hide
-        promise.done null, response
+        setTimeout ->
+          promise.done null, response
+        , 300
       error: (xhr, type, request) =>
         do TukTuk.Modal.hide
-        promise.done xhr, null
+        setTimeout ->
+          promise.done xhr, null
+        , 300
     promise
 
 

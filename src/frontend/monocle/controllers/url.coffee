@@ -14,7 +14,7 @@ class UrlCtrl extends Monocle.Controller
 
   search: (parameters) ->
     @_context "search"
-    if parameters then __Controller.Search.fetch parameters.context
+    if parameters?.context? and parameters.context isnt "" then __Controller.Search.fetch parameters.context
 
   source: (parameters) ->
     @_context "source"

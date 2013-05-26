@@ -5,7 +5,7 @@ class SearchCtrl extends Monocle.Controller
     "[data-context=search] > table" : "results"
 
   events:
-    "click button"                  : "search"
+    "click header button"           : "search"
     "keypress input"                : "onSearch"
 
   constructor: ->
@@ -17,7 +17,13 @@ class SearchCtrl extends Monocle.Controller
 
   # EVENTS
   onSearch: (event) ->
-    @url @txtSearch.val() if event.keyCode is 13 and @txtSearch.val()?
+    __Controller.Source.reset()
+    do @search if event.keyCode is 13
+
+  search: ->
+    if @txtSearch.val()
+      __Controller.Source.reset()
+      @url @txtSearch.val()
 
   # INSTANCE
   fetch: (value) ->

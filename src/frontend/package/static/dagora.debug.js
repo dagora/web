@@ -18,11 +18,15 @@
         dataType: 'json',
         success: function(response) {
           TukTuk.Modal.hide();
-          return promise.done(null, response);
+          return setTimeout(function() {
+            return promise.done(null, response);
+          }, 300);
         },
         error: function(xhr, type, request) {
           TukTuk.Modal.hide();
-          return promise.done(xhr, null);
+          return setTimeout(function() {
+            return promise.done(xhr, null);
+          }, 300);
         }
       });
       return promise;
@@ -248,6 +252,54 @@
 }).call(this);
 
 (function() {
+  var AddSourceCtrl,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  AddSourceCtrl = (function(_super) {
+
+    __extends(AddSourceCtrl, _super);
+
+    function AddSourceCtrl() {
+      return AddSourceCtrl.__super__.constructor.apply(this, arguments);
+    }
+
+    AddSourceCtrl.prototype.elements = {
+      "#title": "txtTitle",
+      "#link": "txtLink",
+      "#unit": "txtUnit",
+      "#data": "txtData"
+    };
+
+    AddSourceCtrl.prototype.events = {
+      "click [data-action=add]": "save"
+    };
+
+    AddSourceCtrl.prototype.save = function(event) {
+      var parameters,
+        _this = this;
+      parameters = {
+        title: this.txtTitle.val(),
+        link: this.txtLink.val(),
+        unit: this.txtUnit.val(),
+        data: this.txtData.val()
+      };
+      return Dagora.api("POST", "sources.json", parameters).then(function(error, response) {
+        if (response) {
+          return TukTuk.Modal.show("source_added");
+        }
+      });
+    };
+
+    return AddSourceCtrl;
+
+  })(Monocle.Controller);
+
+  __Controller.Add = new AddSourceCtrl("[data-tuktuk=modal]#add_source");
+
+}).call(this);
+
+(function() {
   var SearchCtrl,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -262,7 +314,7 @@
     };
 
     SearchCtrl.prototype.events = {
-      "click button": "search",
+      "click header button": "search",
       "keypress input": "onSearch"
     };
 
@@ -278,7 +330,15 @@
     };
 
     SearchCtrl.prototype.onSearch = function(event) {
-      if (event.keyCode === 13 && (this.txtSearch.val() != null)) {
+      __Controller.Source.reset();
+      if (event.keyCode === 13) {
+        return this.search();
+      }
+    };
+
+    SearchCtrl.prototype.search = function() {
+      if (this.txtSearch.val()) {
+        __Controller.Source.reset();
         return this.url(this.txtSearch.val());
       }
     };
@@ -335,7 +395,6 @@
       };
       SourceCtrl.__super__.constructor.apply(this, arguments);
       __Model.Stat.bind("create", this.bindStatCreated);
-      this.boxes.removeClass("hidden");
     }
 
     SourceCtrl.prototype.bindStatCreated = function(instance) {
@@ -384,6 +443,10 @@
       });
     };
 
+    SourceCtrl.prototype.reset = function() {
+      return this.boxes.removeClass("active");
+    };
+
     return SourceCtrl;
 
   })(Monocle.Controller);
@@ -419,7 +482,7 @@
 
     UrlCtrl.prototype.search = function(parameters) {
       this._context("search");
-      if (parameters) {
+      if (((parameters != null ? parameters.context : void 0) != null) && parameters.context !== "") {
         return __Controller.Search.fetch(parameters.context);
       }
     };

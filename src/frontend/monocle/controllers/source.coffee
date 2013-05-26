@@ -8,7 +8,6 @@ class SourceCtrl extends Monocle.Controller
   constructor: ->
     super
     __Model.Stat.bind "create", @bindStatCreated
-    @boxes.removeClass "hidden"
 
   # BINDS
   bindStatCreated: (instance) =>
@@ -34,5 +33,9 @@ class SourceCtrl extends Monocle.Controller
     __Model.Stat.destroyAll()
     Dagora.api("GET", "sources/#{id}.json").then (error, response) =>
       __Model.Stat.create response.data if response?
+
+  reset: ->
+    @boxes.removeClass "active"
+
 
 __Controller.Source = new SourceCtrl "section article[data-context=source]"
