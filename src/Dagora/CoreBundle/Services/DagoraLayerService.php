@@ -82,6 +82,10 @@ class DagoraLayerService
         // if we are searching, search in Searchify
         if ( isset($params['s']) && $params['s'] ) {
 
+            if ( !isset($params['num']) ) {
+                $params['num'] = 30;
+            }
+
             // we have already searched on Searchify this same query
             if ( !$this->resultIds ) {
                 $params['entity'] = $entity;
