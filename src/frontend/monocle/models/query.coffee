@@ -1,3 +1,3 @@
 class __Model.Query extends Monocle.Model
 
-  @fields "title", "source", "unit", "data"
+  @fields "id", "title", "link", "unit", "unit", "data"

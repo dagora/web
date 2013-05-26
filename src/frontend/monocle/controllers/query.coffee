@@ -1,18 +1,18 @@
 class QueryCtrl extends Monocle.Controller
 
+  URL = "http://api.dagora.es/"
+
   elements:
     "input"         : "txtSearch"
     ".box"          : "boxes"
     "#pie"          : "pies"
 
-  events:
-    "click button"    : "search"
-    "keypress input"  : "onKeyPress"
+  # events:
+  #   "click button"    : "search"
+  #   "keypress input"  : "onKeyPress"
 
   constructor: ->
     super
-    # TukTuk.Modal.show "welcome"
-    # TukTuk.Modal.loading()
     @boxes.removeClass "hidden"
 
   onKeyPress: (event) ->
@@ -21,6 +21,7 @@ class QueryCtrl extends Monocle.Controller
     do @search if event.keyCode is 13
 
   search: ->
+    TukTuk.Modal.loading()
     @boxes.addClass "active"
 
     # BAR
@@ -57,5 +58,6 @@ class QueryCtrl extends Monocle.Controller
     new __View.GraphPie model: title: "Percent.3", percent: 34
     new __View.GraphPie model: title: "Percent.4", percent: 17
 
-$ ->
-  __Controller.Query = new QueryCtrl "section"
+    TukTuk.Modal.hide()
+
+__Controller.Query = new QueryCtrl "section"
