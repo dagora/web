@@ -101,24 +101,66 @@ class Data
      */
     public function setDate($date)
     {
+        $array = self::convertDate($date);
+
+        $this->date     = new \DateTime($array['date']);
+        $this->dateType = $array['dateType'];
+        return $this;
+    }
+
+    /**
+     * Set date
+     *
+     * @param date $date
+     * @return array
+     */
+    public static function convertDate($date)
+    {
         $dateAr = explode('-', $date);
 
         // year
         if ( 1 == count($dateAr) ) {
-            $this->date     = new \DateTime($date.'-01-01');
-            $this->dateType = 'y';
+
+            $y = (int) $dateAr[0];
+
+            // it's not a number
+            if ( $y == 0 ) return null;
+
+            return array(
+                'date'     => $date.'-01-01',
+                'dateType' => 'y'
+            );
         }
         // month
         if ( 2 == count($dateAr) ) {
-            $this->date     = new \DateTime($date.'-01');
-            $this->dateType = 'm';
+
+            $y = (int) $dateAr[0];
+            $m = (int) $dateAr[1];
+
+            // it's not a number
+            if ( $y == 0 || $m == 0 ) return null;
+
+            return array(
+                'date'     => $date.'-01',
+                'dateType' => 'm'
+            );
         }
         // day
         if ( 3 == count($dateAr) ) {
-            $this->date = new \DateTime($date);
-            $this->dateType = 'd';
+
+            $y = (int) $dateAr[0];
+            $m = (int) $dateAr[1];
+            $d = (int) $dateAr[2];
+
+            // it's not a number
+            if ( $y == 0 || $m == 0 || $d == 0 ) return null;
+
+            return array(
+                'date'     => $date,
+                'dateType' => 'd'
+            );
         }
-        return $this;
+        return null;
     }
 
     /**
